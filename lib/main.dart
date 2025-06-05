@@ -1,3 +1,4 @@
+import 'package:fit_movies_app/navigations/navigation_routes.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Stay tune the movie!',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -28,10 +29,16 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.tealAccent),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      themeMode: ThemeMode.system,
+      initialRoute: NavigationRoutes.movieList.name,
+      routes: {
+        NavigationRoutes.movieList.name: (context) => const Text('Movie List'),
+        NavigationRoutes.movieDetail.name: (context) => const Text('Movie Detail'),
+        NavigationRoutes.favourite.name: (context) => const Text('Favourite'),
+      },
     );
   }
 }
