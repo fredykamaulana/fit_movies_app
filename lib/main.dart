@@ -1,13 +1,19 @@
+import 'dart:io';
+import 'package:fit_movies_app/data/db/favourite_movie.dart';
 import 'package:fit_movies_app/navigations/navigation_routes.dart';
 import 'package:fit_movies_app/screens/movie_list_screen/movie_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:hive/hive.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Load environment variables from .env file
   await dotenv.load(fileName: ".env");
+
+  var path = Directory.current.path;
+  Hive..init(path)..registerAdapter(FavouriteMovieAdapter());
 
   runApp(const MyApp());
 }
