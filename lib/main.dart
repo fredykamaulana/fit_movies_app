@@ -4,6 +4,7 @@ import 'package:fit_movies_app/navigations/navigation_routes.dart';
 import 'package:fit_movies_app/screens/movie_list_screen/movie_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
 Future main() async {
@@ -14,6 +15,8 @@ Future main() async {
 
   var path = Directory.current.path;
   Hive..init(path)..registerAdapter(FavouriteMovieAdapter());
+  var box = await Hive.openBox<FavouriteMovie>('favouriteMovies');
+  Get.put<Box<FavouriteMovie>>(box);
 
   runApp(const MyApp());
 }
