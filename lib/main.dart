@@ -1,7 +1,14 @@
 import 'package:fit_movies_app/navigations/navigation_routes.dart';
+import 'package:fit_movies_app/screens/movie_list_screen/movie_list_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Load environment variables from .env file
+  await dotenv.load(fileName: ".env");
+
   runApp(const MyApp());
 }
 
@@ -34,13 +41,13 @@ class _MyAppState extends State<MyApp> {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.tealAccent),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
         useMaterial3: true,
       ),
       themeMode: ThemeMode.system,
       initialRoute: NavigationRoutes.movieList.name,
       routes: {
-        NavigationRoutes.movieList.name: (context) => const Text('Movie List'),
+        NavigationRoutes.movieList.name: (context) => MovieListScreen(),
         NavigationRoutes.movieDetail.name: (context) => const Text('Movie Detail'),
         NavigationRoutes.favourite.name: (context) => const Text('Favourite'),
       },
