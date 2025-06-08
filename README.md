@@ -5,8 +5,8 @@ This is a movie project which built for skill enhancement purpose.
 ## Getting Started
 
 # How to run the project
-- Clone the repository:
-- .evn file is not included in the repository, so you need to create it and add your own TMDB_API_KEY variable.
+- Clone the repository
+- .evn file is not included in the repository, so you need to create it and add your own TMDB_API_KEY=token variable.
 
 # Bug must be solved
 - [Movie List Screen] stack layout, long title will overflow the screen, so it needs to be fixed.
