@@ -1,6 +1,6 @@
 import 'package:fit_movies_app/data/db/favourite_movie.dart';
 import 'package:fit_movies_app/navigations/navigation_routes.dart';
-import 'package:fit_movies_app/screens/favourite/favourite_movies_screen.dart';
+import 'package:fit_movies_app/screens/favourite_screen/favourite_movies_screen.dart';
 import 'package:fit_movies_app/screens/movie_detail_screen/movie_detail_screen.dart';
 import 'package:fit_movies_app/screens/movie_list_screen/movie_list_screen.dart';
 import 'package:flutter/material.dart';
