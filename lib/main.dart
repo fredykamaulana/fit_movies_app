@@ -1,11 +1,12 @@
-import 'dart:io';
 import 'package:fit_movies_app/data/db/favourite_movie.dart';
 import 'package:fit_movies_app/navigations/navigation_routes.dart';
+import 'package:fit_movies_app/screens/favourite/favourite_movies_screen.dart';
+import 'package:fit_movies_app/screens/movie_detail_screen/movie_detail_screen.dart';
 import 'package:fit_movies_app/screens/movie_list_screen/movie_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,8 +14,7 @@ Future main() async {
   // Load environment variables from .env file
   await dotenv.load(fileName: ".env");
 
-  var path = Directory.current.path;
-  Hive..init(path)..registerAdapter(FavouriteMovieAdapter());
+  Hive..initFlutter()..registerAdapter(FavouriteMovieAdapter());
   var box = await Hive.openBox<FavouriteMovie>('favouriteMovies');
   Get.put<Box<FavouriteMovie>>(box);
 
@@ -57,8 +57,11 @@ class _MyAppState extends State<MyApp> {
       initialRoute: NavigationRoutes.movieList.name,
       routes: {
         NavigationRoutes.movieList.name: (context) => MovieListScreen(),
-        NavigationRoutes.movieDetail.name: (context) => const Text('Movie Detail'),
-        NavigationRoutes.favourite.name: (context) => const Text('Favourite'),
+        NavigationRoutes.movieDetail.name: (context) =>
+            MovieDetailScreen(
+              movieId: ModalRoute.of(context)?.settings.arguments as int,
+            ),
+        NavigationRoutes.favourite.name: (context) => FavouriteMovieScreen(),
       },
     );
   }
