@@ -4,12 +4,10 @@ sealed class RemoteState extends Equatable {}
 
 class RemoteStateNone extends RemoteState {
   @override
-  // TODO: implement props
   List<Object?> get props => [];
 }
 class RemoteStateLoading extends RemoteState {
   @override
-  // TODO: implement props
   List<Object?> get props => [];
 }
 class RemoteStateError extends RemoteState {
@@ -18,7 +16,6 @@ class RemoteStateError extends RemoteState {
   RemoteStateError(this.error);
 
   @override
-  // TODO: implement props
   List<Object?> get props => [error];
 }
 class RemoteStateSuccess<T> extends RemoteState {
@@ -27,6 +24,5 @@ class RemoteStateSuccess<T> extends RemoteState {
   RemoteStateSuccess(this.data);
 
   @override
-  // TODO: implement props
   List<Object?> get props => [data];
 }
