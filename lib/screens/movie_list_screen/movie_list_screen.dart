@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:fit_movies_app/controllers/movie_list_controller/movie_list_controller.dart';
 import 'package:fit_movies_app/data/services/movie_service.dart';
-import 'package:fit_movies_app/data/state/remote_state.dart';
 import 'package:fit_movies_app/screens/movie_list_screen/movie_list_content.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -41,14 +40,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Obx(() {
-        return switch (movieListController.remoteState) {
-          RemoteStateLoading() => const Center(child: CircularProgressIndicator()),
-          RemoteStateError(error: var message) => Center(child: Text(message)),
-          RemoteStateSuccess() => MovieListContent(),
-          _ => const Center(child: Text('nothing'))
-        };
-      }),
+      body: const MovieListContent(),
     );
   }
 }
