@@ -10,8 +10,7 @@ This is a movie project which built for skill enhancement purpose.
 - or can use my token eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3YmQ0MDNhNzllZWQyZmUxMjI1YThkNGM2MGU5NzQ0NCIsIm5iZiI6MTU5MzA1ODYwNy4wNDQsInN1YiI6IjVlZjQyNTJmOTc2YTIzMDAzNWI0YjhjOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.IZrXSoUQlLlPbbvYbaRX9w5idl1dnLi4C-IeZovOmTw
 
 # Bug must be fixed
-- [Movie List Screen] stack layout, long title will overflow the screen, so it needs to be fixed.
-- [Movie Search Screen] infinite scroll is not working seamlessly, so it needs to be fixed.
+-
 
 This project is a starting point for a Flutter application.
 
