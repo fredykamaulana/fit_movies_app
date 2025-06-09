@@ -35,10 +35,9 @@ class _FloatingNavbarState extends State<FloatingNavbar> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: FloatingSearchBar()
             ),
-            false => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: MainMenuNavbar(movieListController: movieListController)
-            ),
+            false => Center(
+              child: MainMenuNavbar(movieListController: movieListController),
+            )
           };
         }),
       ),
