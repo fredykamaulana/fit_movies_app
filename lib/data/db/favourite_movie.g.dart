@@ -17,10 +17,10 @@ class FavouriteMovieAdapter extends TypeAdapter<FavouriteMovie> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return FavouriteMovie(
-      id: fields[0] as int,
-      title: fields[1] as String,
-      releaseDate: fields[2] as String,
-      posterPath: fields[3] as String,
+      id: fields[0]?? 0,
+      title: fields[1]?? '',
+      releaseDate: fields[2]?? '',
+      posterPath: fields[3]?? '',
     );
   }
 
