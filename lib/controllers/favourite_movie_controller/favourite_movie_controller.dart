@@ -27,6 +27,8 @@ class FavouriteMovieController extends GetxController {
   Future<void> addFavouriteMovie(FavouriteMovie movie) async {
     await dbService.addFavouriteMovie(movie);
     _isFavourite.value = true;
+
+    await getAllFavouriteMovies();
   }
 
   Future<void> removeFavouriteMovie(int movieId) async {
