@@ -19,9 +19,9 @@ class _MainMenuNavbarState extends State<MainMenuNavbar> {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
+        mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-
           Obx(() {
             return TextButton(
                 onPressed: () {
