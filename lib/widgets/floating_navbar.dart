@@ -31,8 +31,14 @@ class _FloatingNavbarState extends State<FloatingNavbar> {
         child: Obx(() {
           bool isSearching = movieListController.isSearching;
           return switch(isSearching) {
-            true => FloatingSearchBar(),
-            false => MainMenuNavbar(movieListController: movieListController),
+            true => Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: FloatingSearchBar()
+            ),
+            false => Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: MainMenuNavbar(movieListController: movieListController)
+            ),
           };
         }),
       ),
