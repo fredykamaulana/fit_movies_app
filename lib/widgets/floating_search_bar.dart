@@ -13,6 +13,21 @@ class FloatingSearchBar extends StatefulWidget {
 class _FloatingSearchBarState extends State<FloatingSearchBar> {
 
   MovieListController movieListController = Get.find();
+  TextEditingController searchController = TextEditingController();
+
+  @override
+  void initState() {
+
+    Future.microtask(() {
+      if (movieListController.isSearching) {
+        searchController.text = movieListController.searchQuery;
+      } else {
+        searchController.clear();
+      }
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +41,7 @@ class _FloatingSearchBarState extends State<FloatingSearchBar> {
           Expanded(
               flex: 1,
               child: TextField(
+                controller: searchController,
                 decoration: InputDecoration.collapsed(
                   hintText: 'Input your desired movie title',
                 ),
