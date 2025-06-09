@@ -14,7 +14,8 @@ Future main() async {
   // Load environment variables from .env file
   await dotenv.load(fileName: ".env");
 
-  Hive..initFlutter()..registerAdapter(FavouriteMovieAdapter());
+  await Hive.initFlutter();
+  Hive.registerAdapter(FavouriteMovieAdapter());
   var box = await Hive.openBox<FavouriteMovie>('favouriteMovies');
   Get.put<Box<FavouriteMovie>>(box);
 
