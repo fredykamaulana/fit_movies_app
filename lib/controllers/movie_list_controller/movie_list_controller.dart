@@ -116,19 +116,15 @@ class MovieListController extends GetxController {
         return _movieList.value; // Return current list if already loading
       }
 
-      page == 1 ? _remoteState.value = RemoteStateLoading() :
       _pagingState.value = RemoteStateLoading();
 
-      _movieList.value = [];
+      if (page == 1) _movieList.value = [];
 
       final result = await searchService.searchMovies(query, page);
 
       if (result.results.isEmpty) {
-        page == 1 ? _remoteState.value = RemoteStateError('No movies found') :
         _pagingState.value = RemoteStateError('No more movies found');
       } else {
-        page == 1 ?
-        _remoteState.value = RemoteStateSuccess<MovieListResponse>(result) :
         _pagingState.value = RemoteStateSuccess<MovieListResponse>(result);
 
         _currentPage.value = result.page;
