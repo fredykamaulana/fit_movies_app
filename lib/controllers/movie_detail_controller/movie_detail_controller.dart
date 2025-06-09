@@ -11,7 +11,6 @@ class MovieDetailController extends GetxController {
 
   get remoteState => _remoteState.value;
 
-  //get movie detail by id
   Future getMovieDetail(int movieId) async {
     try {
       _remoteState.value = RemoteStateLoading();

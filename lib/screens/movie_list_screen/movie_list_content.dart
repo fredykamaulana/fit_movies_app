@@ -2,7 +2,7 @@ import 'package:fit_movies_app/controllers/movie_list_controller/movie_list_cont
 import 'package:fit_movies_app/data/responses/movie_list_response.dart';
 import 'package:fit_movies_app/data/state/remote_state.dart';
 import 'package:fit_movies_app/widgets/floating_navbar.dart';
-import 'package:fit_movies_app/widgets/movie_Item.dart';
+import 'package:fit_movies_app/widgets/movie_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';

@@ -31,5 +31,4 @@ class DioApiClient {
 
   late final Dio _dio;
   Dio get dio => _dio;
-
 }

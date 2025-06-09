@@ -1,6 +1,6 @@
 import 'package:fit_movies_app/data/network/dio_api_client.dart';
 import 'package:fit_movies_app/data/responses/movie_detail_response.dart';
-import 'package:fit_movies_app/widgets/favourite_button_widget/favourite_button_widget.dart';
+import 'package:fit_movies_app/widgets/favourite_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -174,5 +174,4 @@ class MovieDetailContent extends StatelessWidget {
       ),
     );
   }
-
 }
