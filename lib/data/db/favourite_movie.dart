@@ -14,7 +14,6 @@ class FavouriteMovie {
   @HiveField(2)
   final String releaseDate;
 
-  //posterpath
   @HiveField(3)
   final String posterPath;
 
