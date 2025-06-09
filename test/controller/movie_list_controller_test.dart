@@ -26,7 +26,7 @@ void main() {
       controller = Get.put(MovieListController(movieService: movieService));
     });
 
-    test('When init load movie list and list is empty remote state should return error empty list', () async {
+    test('When load movie list and list is empty remote state should return error empty list', () async {
       // Arrange
       when(() => movieService.fetchMovies(MovieFilter.nowPlaying.name, 1))
           .thenAnswer((_) => Future.value(
@@ -40,11 +40,11 @@ void main() {
       verify(() => movieService.fetchMovies(MovieFilter.nowPlaying.name, 1)).called(1);
 
       // Assert
-      final remoteState = controller.remoteState;
+      final remoteState = controller.pagingState;
       expect(remoteState, isA<RemoteStateError>());
     });
 
-    test('When init load movie list and list is not empty remote state should return success data', () async {
+    test('When load movie list and list is not empty remote state should return success data', () async {
       // Arrange
       when(() => movieService.fetchMovies(MovieFilter.nowPlaying.name, 1))
           .thenAnswer((_) => Future.value(
@@ -58,7 +58,7 @@ void main() {
       verify(() => movieService.fetchMovies(MovieFilter.nowPlaying.name, 1)).called(1);
 
       // Assert
-      final remoteState = controller.remoteState;
+      final remoteState = controller.pagingState;
       expect(remoteState, isA<RemoteStateSuccess>());
 
       // Assert
@@ -139,7 +139,7 @@ void main() {
       expect(controller.searchQuery, query);
     });
 
-    test('When init search movie list and list is empty remote state should return error empty list', () async {
+    test('When search movie list and list is empty remote state should return error empty list', () async {
       // Arrange
       final query = 'Jumbo';
 
@@ -155,11 +155,11 @@ void main() {
       verify(() => searchService.searchMovies(query, 1)).called(1);
 
       // Assert
-      final remoteState = controller.remoteState;
+      final remoteState = controller.pagingState;
       expect(remoteState, isA<RemoteStateError>());
     });
 
-    test('When init search movie list and list is not empty remote state should return success data', () async {
+    test('When search movie list and list is not empty remote state should return success data', () async {
       // Arrange
       final query = 'Jumbo';
 
@@ -175,7 +175,7 @@ void main() {
       verify(() => searchService.searchMovies(query, 1)).called(1);
 
       // Assert
-      final remoteState = controller.remoteState;
+      final remoteState = controller.pagingState;
       expect(remoteState, isA<RemoteStateSuccess>());
     });
 
