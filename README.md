@@ -7,8 +7,9 @@ This is a movie project which built for skill enhancement purpose.
 # How to run the project
 - Clone the repository
 - .evn file is not included in the repository, so you need to create it and add your own TMDB_API_KEY=token variable.
+- or can use my token eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3YmQ0MDNhNzllZWQyZmUxMjI1YThkNGM2MGU5NzQ0NCIsIm5iZiI6MTU5MzA1ODYwNy4wNDQsInN1YiI6IjVlZjQyNTJmOTc2YTIzMDAzNWI0YjhjOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.IZrXSoUQlLlPbbvYbaRX9w5idl1dnLi4C-IeZovOmTw
 
-# Bug must be solved
+# Bug must be fixed
 - [Movie List Screen] stack layout, long title will overflow the screen, so it needs to be fixed.
 - [Movie Search Screen] infinite scroll is not working seamlessly, so it needs to be fixed.
 
