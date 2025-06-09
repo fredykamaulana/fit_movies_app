@@ -38,7 +38,7 @@ class _MovieListContentState extends State<MovieListContent> {
         _scrollController.position.maxScrollExtent) {
       if(movieListController.isSearching) {
         movieListController.searchMovie(
-            movieListController.selectedFilter,
+            movieListController.searchQuery,
             movieListController.currentPage + 1
         );
       }
