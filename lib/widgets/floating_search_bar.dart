@@ -32,50 +32,47 @@ class _FloatingSearchBarState extends State<FloatingSearchBar> {
   @override
   Widget build(BuildContext context) {
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Expanded(
-              flex: 1,
-              child: TextField(
-                controller: searchController,
-                decoration: InputDecoration.collapsed(
-                  hintText: 'Input your desired movie title',
-                ),
-                onChanged: (text) {
-                  movieListController.setSearchQuery(text);
-                },
-              )
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Expanded(
+            flex: 1,
+            child: TextField(
+              controller: searchController,
+              decoration: InputDecoration.collapsed(
+                hintText: 'Input your desired movie title',
+              ),
+              onChanged: (text) {
+                movieListController.setSearchQuery(text);
+              },
+            )
+        ),
+        IconButton(
+          icon: Icon(
+              Icons.send,
+              color: Colors.cyan
           ),
-          IconButton(
-            icon: Icon(
-                Icons.send,
-                color: Colors.cyan
-            ),
-            onPressed: () {
-              if(movieListController.searchQuery.isNotEmpty == true) {
-                movieListController.searchMovie(
-                    movieListController.searchQuery,
-                    movieListController.currentPage
-                );
-              }
-            },
+          onPressed: () {
+            if(movieListController.searchQuery.isNotEmpty == true) {
+              movieListController.searchMovie(
+                  movieListController.searchQuery,
+                  movieListController.currentPage
+              );
+            }
+          },
+        ),
+        IconButton(
+          icon: Icon(
+              Icons.close,
+              color: Colors.cyan
           ),
-          IconButton(
-            icon: Icon(
-                Icons.close,
-                color: Colors.cyan
-            ),
-            onPressed: () {
-              movieListController.setIsSearching(false);
-              movieListController.setFilter(MovieFilter.nowPlaying);
-            },
-          ),
-        ],
-      ),
+          onPressed: () {
+            movieListController.setIsSearching(false);
+            movieListController.setFilter(MovieFilter.nowPlaying);
+          },
+        ),
+      ],
     );
   }
 }
