@@ -38,32 +38,62 @@ class FavouriteMovieItem extends StatelessWidget {
                       )
                   )
               ),
-              Positioned(
-                  bottom: 16,
-                  left: 16,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        movie.title,
-                        style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white
-                        ),
-                      ),
-                      Text(
-                          movie.releaseDate,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontSize: 12, color: Colors.white70)
-                      ),
-                    ],
-                  )
-              )
+
+              MovieShortInfoView(movie: movie)
             ],
           ),
         )
+      ),
+    );
+  }
+}
+
+class MovieShortInfoView extends StatelessWidget {
+  final FavouriteMovie movie;
+
+  const MovieShortInfoView({super.key, required this.movie});
+
+  BoxDecoration _gradientBackground() {
+    return const BoxDecoration(
+      gradient: LinearGradient(
+        begin: Alignment.bottomCenter,
+        end: Alignment.topCenter,
+        stops: [0.0, 0.7, 0.7],
+        colors: [
+          Colors.black,
+          Colors.transparent,
+          Colors.transparent,
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Container(
+        decoration: _gradientBackground(),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              movie.title,
+              style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white
+              ),
+            ),
+            const SizedBox(height: 4.0),
+            Text(
+                movie.releaseDate,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontSize: 12, color: Colors.white70)
+            ),
+          ],
+        ),
       ),
     );
   }
