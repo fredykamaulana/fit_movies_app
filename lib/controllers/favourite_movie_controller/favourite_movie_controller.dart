@@ -1,9 +1,9 @@
 import 'package:fit_movies_app/data/db/favourite_movie.dart';
-import 'package:fit_movies_app/data/db/local_database_service.dart';
+import 'package:fit_movies_app/data/db/sqflite/database_helper.dart';
 import 'package:get/get.dart';
 
 class FavouriteMovieController extends GetxController {
-  final LocalDatabaseService dbService;
+  final DatabaseHelper dbService;
 
   FavouriteMovieController(this.dbService);
 
@@ -11,7 +11,7 @@ class FavouriteMovieController extends GetxController {
 
   get isFavourite => _isFavourite.value;
 
-  findingFavouriteMovie(int movieId) async{
+  findingFavouriteMovie(int movieId) async {
     final favouriteMovie = await dbService.isFavourite(movieId);
     if (favouriteMovie) {
       _isFavourite.value = true;
@@ -38,7 +38,8 @@ class FavouriteMovieController extends GetxController {
     await getAllFavouriteMovies();
   }
 
-  final Rx<List<FavouriteMovie>> _favouriteMovies = Rx<List<FavouriteMovie>>([]);
+  final Rx<List<FavouriteMovie>> _favouriteMovies =
+      Rx<List<FavouriteMovie>>([]);
 
   get favouriteMovies => _favouriteMovies.value;
 
