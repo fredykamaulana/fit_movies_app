@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "179049673161",
+    "project_id": "fit-movies-flutter-app",
+    "storage_bucket": "fit-movies-flutter-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:179049673161:android:636fe6f2f26eac8a89b818",
+        "android_client_info": {
+          "package_name": "com.example.fit_movies_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQZWStbgoPxoG-3ZLApn6lq-b86dqEDhM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
