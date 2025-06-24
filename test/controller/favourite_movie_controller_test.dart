@@ -1,26 +1,27 @@
-
 import 'package:fit_movies_app/controllers/favourite_movie_controller/favourite_movie_controller.dart';
 import 'package:fit_movies_app/data/db/local_database_service.dart';
+import 'package:fit_movies_app/data/firestore/firestore_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../utils/utils.dart';
 
-class MockLocalDatabaseService extends Mock implements LocalDatabaseService {}
+class MockFirestoreService extends Mock implements FirestoreService {}
 
 void main() {
-  group('Favourite Movie Controller Test', (){
+  group('Favourite Movie Controller Test', () {
     //setup the controller instance
-    late LocalDatabaseService dbService;
+    late MockFirestoreService dbService;
     late FavouriteMovieController controller;
 
     setUp(() {
-      dbService = Get.put(MockLocalDatabaseService());
+      dbService = Get.put(MockFirestoreService());
       controller = Get.put(FavouriteMovieController(dbService));
     });
 
-    test('isFavourite value should be true when db contains desired movieId', () async{
+    test('isFavourite value should be true when db contains desired movieId',
+        () async {
       // Arrange
       when(() => dbService.isFavourite(1))
           .thenAnswer((_) => Future.value(true));
@@ -35,7 +36,9 @@ void main() {
       expect(controller.isFavourite, true);
     });
 
-    test('isFavourite value should be false when db not contains desired movieId', () async{
+    test(
+        'isFavourite value should be false when db not contains desired movieId',
+        () async {
       // Arrange
       when(() => dbService.isFavourite(1))
           .thenAnswer((_) => Future.value(false));
@@ -50,7 +53,8 @@ void main() {
       expect(controller.isFavourite, false);
     });
 
-    test('isFavourite should be return desired value when set favourite status', () {
+    test('isFavourite should be return desired value when set favourite status',
+        () {
       // Act
       controller.setFavouriteStatus(true);
 
@@ -85,7 +89,8 @@ void main() {
       expect(controller.favouriteMovies, contains(dummyFavouriteMovie));
     });
 
-    test('favouriteMovies should not contains deleted favourite movie', () async {
+    test('favouriteMovies should not contains deleted favourite movie',
+        () async {
       // Arrange
       when(() => dbService.addFavouriteMovie(dummyFavouriteMovie))
           .thenAnswer((_) => Future.value());
