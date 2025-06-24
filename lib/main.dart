@@ -1,4 +1,6 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:fit_movies_app/data/db/favourite_movie.dart';
+import 'package:fit_movies_app/firebase_options.dart';
 import 'package:fit_movies_app/navigations/navigation_routes.dart';
 import 'package:fit_movies_app/screens/favourite_screen/favourite_movies_screen.dart';
 import 'package:fit_movies_app/screens/movie_detail_screen/movie_detail_screen.dart';
@@ -14,10 +16,14 @@ Future main() async {
   // Load environment variables from .env file
   await dotenv.load(fileName: ".env");
 
+  // Configure local database with Hive
   await Hive.initFlutter();
   Hive.registerAdapter(FavouriteMovieAdapter());
   var box = await Hive.openBox<FavouriteMovie>('favouriteMovies');
   Get.put<Box<FavouriteMovie>>(box);
+
+  // Initialize Firebase instance
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(const MyApp());
 }
@@ -58,8 +64,7 @@ class _MyAppState extends State<MyApp> {
       initialRoute: NavigationRoutes.movieList.name,
       routes: {
         NavigationRoutes.movieList.name: (context) => MovieListScreen(),
-        NavigationRoutes.movieDetail.name: (context) =>
-            MovieDetailScreen(
+        NavigationRoutes.movieDetail.name: (context) => MovieDetailScreen(
               movieId: ModalRoute.of(context)?.settings.arguments as int,
             ),
         NavigationRoutes.favourite.name: (context) => FavouriteMovieScreen(),
