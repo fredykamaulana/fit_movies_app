@@ -30,7 +30,7 @@ class FirestoreService {
   }
 
   //For real-time favourite movie list
-  Future<Stream<QuerySnapshot>> getAllFavouriteMoviesRealTime() async {
+  Stream<QuerySnapshot> getAllFavouriteMoviesRealTime() {
     return moviesRef.snapshots();
   }
 }
