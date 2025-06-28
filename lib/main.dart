@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fit_movies_app/firebase_options.dart';
 import 'package:fit_movies_app/navigations/navigation_routes.dart';
@@ -15,6 +16,9 @@ Future main() async {
 
   // Initialize Firebase instance
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  // enable firestore offline mode
+  FirebaseFirestore.instance.settings = Settings(persistenceEnabled: true);
 
   runApp(const MyApp());
 }
