@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fit_movies_app/data/db/favourite_movie.dart';
 import 'package:fit_movies_app/data/firestore/firestore_service.dart';
 import 'package:get/get.dart';
@@ -45,5 +46,9 @@ class FavouriteMovieController extends GetxController {
 
   getAllFavouriteMovies() async {
     _favouriteMovies.value = await dbService.getAllFavouriteMovies();
+  }
+
+  streamAllFavouriteMovies() async {
+    final snapshots = await dbService.getAllFavouriteMoviesRealTime();
   }
 }
