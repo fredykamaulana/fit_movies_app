@@ -48,7 +48,8 @@ class FavouriteMovieController extends GetxController {
     _favouriteMovies.value = await dbService.getAllFavouriteMovies();
   }
 
-  streamAllFavouriteMovies() async {
-    final snapshots = await dbService.getAllFavouriteMoviesRealTime();
+  Stream<QuerySnapshot> streamAllFavouriteMovies() {
+    final snapshots = dbService.getAllFavouriteMoviesRealTime();
+    return snapshots;
   }
 }
