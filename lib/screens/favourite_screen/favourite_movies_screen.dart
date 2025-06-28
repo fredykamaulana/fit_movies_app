@@ -32,6 +32,9 @@ class _FavouriteMovieScreenState extends State<FavouriteMovieScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Stream<QuerySnapshot> snapshots =
+        favouriteController.streamAllFavouriteMovies();
+
     return Scaffold(
         appBar: AppBar(
           leading: BackButton(
@@ -42,30 +45,7 @@ class _FavouriteMovieScreenState extends State<FavouriteMovieScreen> {
           ),
           title: const Text("Favourite Movies"),
         ),
-        body: Obx(() {
-          return switch (favouriteController.favouriteMovies.isNotEmpty) {
-            true => Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 8.0,
-                      crossAxisSpacing: 8.0,
-                      childAspectRatio: 0.7, // Adjust aspect ratio as needed
-                    ),
-                    itemCount: favouriteController.favouriteMovies.length,
-                    itemBuilder: (context, index) {
-                      final movie = favouriteController.favouriteMovies[index];
-
-                      return FavouriteMovieItem(movie: movie);
-                    })),
-            _ => const Center(
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [Text("No favourite movies")]),
-              )
-          };
-        }));
+        body: StreamFavouriteMovie(snapshots: snapshots));
   }
 }
 
@@ -74,7 +54,7 @@ class FavouriteMovieContent extends StatelessWidget {
   const FavouriteMovieContent({super.key, required this.favouriteMovies});
 
   @override
-  Widget build(BuildContext) {
+  Widget build(BuildContext context) {
     return Obx(() {
       return switch (favouriteMovies.isNotEmpty) {
         true => Padding(
@@ -113,7 +93,34 @@ class StreamFavouriteMovie extends StatefulWidget {
 class _StreamFavouriteMovieState extends State<StreamFavouriteMovie> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return StreamBuilder<QuerySnapshot>(
+        stream: widget.snapshots,
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text('Something went wrong'),
+            );
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          final result = snapshot.data!.docs;
+          return GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 8.0,
+              crossAxisSpacing: 8.0,
+              childAspectRatio: 0.7, // Adjust aspect ratio as needed
+            ),
+            itemCount: result.length,
+            itemBuilder: (context, index) {
+              final data = result[index].data() as FavouriteMovie;
+              return FavouriteMovieItem(movie: data);
+            },
+          );
+        });
   }
 }
