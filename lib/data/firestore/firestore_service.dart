@@ -28,4 +28,9 @@ class FirestoreService {
 
     return dataSnapshot.docs.map((doc) => doc.data()).toList();
   }
+
+  //For real-time favourite movie list
+  Future<Stream<QuerySnapshot>> getAllFavouriteMoviesRealTime() async {
+    return moviesRef.snapshots();
+  }
 }
