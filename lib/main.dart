@@ -5,6 +5,8 @@ import 'package:fit_movies_app/navigations/navigation_routes.dart';
 import 'package:fit_movies_app/screens/favourite_screen/favourite_movies_screen.dart';
 import 'package:fit_movies_app/screens/movie_detail_screen/movie_detail_screen.dart';
 import 'package:fit_movies_app/screens/movie_list_screen/movie_list_screen.dart';
+import 'package:fit_movies_app/screens/register_screen/register_screen.dart';
+import 'package:fit_movies_app/screens/sign_in_screen/sign_in_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -56,8 +58,10 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: true,
       ),
       themeMode: ThemeMode.system,
-      initialRoute: NavigationRoutes.movieList.name,
+      initialRoute: NavigationRoutes.signin.name,
       routes: {
+        NavigationRoutes.signin.name: (context) => SignInScreen(),
+        NavigationRoutes.register.name: (context) => RegisterScreen(),
         NavigationRoutes.movieList.name: (context) => MovieListScreen(),
         NavigationRoutes.movieDetail.name: (context) => MovieDetailScreen(
               movieId: ModalRoute.of(context)?.settings.arguments as int,
