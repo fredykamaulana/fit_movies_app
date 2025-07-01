@@ -12,7 +12,20 @@
           "package_name": "com.example.fit_movies_app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "179049673161-pu3etga7krf3vd8dctf0g0ghp15j38un.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fit_movies_app",
+            "certificate_hash": "7280117f07cc61a667be857a12e704c5ec96788a"
+          }
+        },
+        {
+          "client_id": "179049673161-v1n7npj19qqvt7eanj09pa8p4tpfrajm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBQZWStbgoPxoG-3ZLApn6lq-b86dqEDhM"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "179049673161-v1n7npj19qqvt7eanj09pa8p4tpfrajm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "179049673161-i2apdfqjnq127eo9tglpdb8vrvtug86p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.fitMoviesApp"
+              }
+            }
+          ]
         }
       }
     }
