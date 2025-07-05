@@ -1,4 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fit_movies_app/controllers/auth_controller/auth_controller.dart';
+import 'package:fit_movies_app/controllers/user_controller/user_controller.dart';
+import 'package:fit_movies_app/data/firestore/firestore_user_service.dart';
+import 'package:fit_movies_app/data/model/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,6 +18,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController psswdController = TextEditingController();
 
   AuthController authController = Get.find();
+
+  UserController userController =
+      Get.put(UserController(Get.put(FirestoreUserService())));
 
   bool passwordVisible = true;
   @override
@@ -79,21 +86,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               SizedBox.square(dimension: 16),
               ElevatedButton(
                   onPressed: () async {
-                    final result = await authController.register(
-                        emailController.text, psswdController.text);
-
-                    if (mounted) {
-                      if (result != null) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content:
-                                Text('Sukses daftar sebagai ${result.email}')));
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Masuk gagal')));
-                      }
-                    }
-                    emailController.clear();
-                    psswdController.clear();
+                    _register();
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -123,5 +116,37 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       )),
     );
+  }
+
+  Future _register() async {
+    try {
+      final result = await authController.register(
+          emailController.text, psswdController.text);
+
+      userController.addUser(UserData(
+          userId: result.user?.uid ?? '',
+          userName: result.user?.displayName ?? '',
+          userEmail: result.user?.email ?? ''));
+
+      _showSnackbar('Sukses daftar sebagai ${result.user?.email}');
+
+      if (mounted) {
+        Navigator.pop(context);
+      }
+    } on FirebaseAuthException catch (e) {
+      _showSnackbar('Daftar gagal: ${e.message}');
+    } catch (e) {
+      _showSnackbar('Daftar gagal');
+    }
+
+    emailController.clear();
+    psswdController.clear();
+  }
+
+  _showSnackbar(String message) {
+    if (mounted) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(message)));
+    }
   }
 }
