@@ -134,7 +134,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
       if (mounted) {
         _showSnackbar('Sukses masuk sebagai ${result.user?.email}');
-        Navigator.pushNamed(context, NavigationRoutes.movieList.name);
+        //Navigator.pushNamed(context, NavigationRoutes.movieList.name);
       }
     } on FirebaseAuthException catch (e) {
       _showSnackbar('Masuk gagal: ${e.message}');
@@ -153,7 +153,7 @@ class _SignInScreenState extends State<SignInScreen> {
       if (result != null) {
         if (mounted) {
           _showSnackbar('Sukses masuk sebagai ${result.user?.email}');
-          Navigator.pushNamed(context, NavigationRoutes.movieList.name);
+          //Navigator.pushNamed(context, NavigationRoutes.movieList.name);
         }
       }
     } on FirebaseAuthException catch (e) {
