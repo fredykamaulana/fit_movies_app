@@ -12,7 +12,6 @@ class FloatingNavbar extends StatefulWidget {
 }
 
 class _FloatingNavbarState extends State<FloatingNavbar> {
-
   MovieListController movieListController = Get.find();
 
   @override
@@ -30,17 +29,15 @@ class _FloatingNavbarState extends State<FloatingNavbar> {
         ),
         child: Obx(() {
           bool isSearching = movieListController.isSearching;
-          return switch(isSearching) {
+          return switch (isSearching) {
             true => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: FloatingSearchBar()
-            ),
-            false => Center(
-              child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: MainMenuNavbar(movieListController: movieListController),
-              )
-            )
+                child: FloatingSearchBar()),
+            false => Center(
+                  child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: MainMenuNavbar(),
+              ))
           };
         }),
       ),
