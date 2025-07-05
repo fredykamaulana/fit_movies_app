@@ -5,7 +5,7 @@ import 'package:fit_movies_app/screens/movie_list_screen/movie_list_content.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class MovieListScreen extends StatefulWidget{
+class MovieListScreen extends StatefulWidget {
   const MovieListScreen({super.key});
 
   @override
@@ -13,28 +13,17 @@ class MovieListScreen extends StatefulWidget{
 }
 
 class _MovieListScreenState extends State<MovieListScreen> {
-
-  MovieListController movieListController = Get.put(
-      MovieListController(movieService: Get.put(MovieService()))
-  );
+  MovieListController movieListController =
+      Get.put(MovieListController(movieService: Get.put(MovieService())));
 
   @override
   void initState() {
-
     Future.microtask(() => {
-      movieListController.getMovieList(
-          movieListController.selectedFilter,
-          movieListController.currentPage
-      )
-    });
+          movieListController.getMovieList(movieListController.selectedFilter,
+              movieListController.currentPage)
+        });
 
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    movieListController.dispose();
-    super.dispose();
   }
 
   @override
