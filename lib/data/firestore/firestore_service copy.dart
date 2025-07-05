@@ -10,22 +10,27 @@ class FirestoreService {
         toFirestore: (movie, _) => movie.toJson(),
       );
 
-  Future addFavouriteMovie(FavouriteMovie movie) async {}
+  Future addFavouriteMovie(FavouriteMovie movie) async {
+    await moviesRef.doc(movie.id.toString()).set(movie);
+  }
 
-  Future removeFavouriteMovie(int movieId) async {}
+  Future removeFavouriteMovie(int movieId) async {
+    await moviesRef.doc(movieId.toString()).delete();
+  }
 
   Future<bool> isFavourite(int movieId) async {
-    return Future.value(false);
+    final result = await moviesRef.doc(movieId.toString()).get();
+    return result.exists;
   }
 
   Future<List<FavouriteMovie>> getAllFavouriteMovies() async {
     final dataSnapshot = await moviesRef.get();
 
-    return [];
+    return dataSnapshot.docs.map((doc) => doc.data()).toList();
   }
 
   //For real-time favourite movie list
   Stream<QuerySnapshot> getAllFavouriteMoviesRealTime() {
-    return Stream.empty();
+    return moviesRef.snapshots();
   }
 }
