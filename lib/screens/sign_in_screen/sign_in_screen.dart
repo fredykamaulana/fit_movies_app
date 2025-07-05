@@ -7,6 +7,7 @@ import 'package:fit_movies_app/data/model/user_data.dart';
 import 'package:fit_movies_app/navigations/navigation_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -137,14 +138,10 @@ class _SignInScreenState extends State<SignInScreen> {
       final result = await authController.signIn(
           emailController.text, psswdController.text);
 
-      if (result != null) {
-        userController.addUser(UserData(
-            userId: result.uid,
-            userName: result.displayName ?? '',
-            userEmail: result.email ?? ''));
+      if (mounted) {
+        _showSnackbar('Sukses masuk sebagai ${result.user?.email}');
+        Navigator.pushNamed(context, NavigationRoutes.movieList.name);
       }
-
-      _showSnackbar('Sukses masuk sebagai ${result?.email}');
     } on FirebaseAuthException catch (e) {
       _showSnackbar('Masuk gagal: ${e.message}');
     } catch (e) {
@@ -164,13 +161,18 @@ class _SignInScreenState extends State<SignInScreen> {
             userId: result.user?.uid ?? '',
             userName: result.user?.displayName ?? '',
             userEmail: result.user?.email ?? ''));
-      }
 
-      _showSnackbar('Sukses masuk sebagai ${result?.user?.email}');
+        if (mounted) {
+          _showSnackbar('Sukses masuk sebagai ${result.user?.email}');
+          Navigator.pushNamed(context, NavigationRoutes.movieList.name);
+        }
+      }
     } on FirebaseAuthException catch (e) {
       _showSnackbar('Masuk gagal: ${e.message}');
+    } on GoogleSignInException catch (e) {
+      _showSnackbar('Masuk gagal: ${e.description}');
     } catch (e) {
-      _showSnackbar('Masuk gagal');
+      _showSnackbar('Masuk gagal: $e');
     }
   }
 
