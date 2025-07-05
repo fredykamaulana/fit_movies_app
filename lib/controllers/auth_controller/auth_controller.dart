@@ -5,18 +5,12 @@ class AuthController {
   final FirebaseAuthService authService;
   AuthController(this.authService);
 
-  Future<User?> signIn(String email, String password) async {
-    final result =
-        await authService.signInWithEmailAndPassword(email, password);
-
-    return result;
+  Future<UserCredential> signIn(String email, String password) async {
+    return await authService.signInWithEmailAndPassword(email, password);
   }
 
-  Future<User?> register(String email, String password) async {
-    final result =
-        await authService.registerWithEmailAndPassword(email, password);
-
-    return result;
+  Future<UserCredential> register(String email, String password) async {
+    return await authService.registerWithEmailAndPassword(email, password);
   }
 
   Stream<User?> checkUserSignInState() {
@@ -29,6 +23,6 @@ class AuthController {
   }
 
   signOut() {
-    authService.signInWithGoogle();
+    authService.signOut();
   }
 }
