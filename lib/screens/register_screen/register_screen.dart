@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fit_movies_app/controllers/auth_controller/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -79,21 +80,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               SizedBox.square(dimension: 16),
               ElevatedButton(
                   onPressed: () async {
-                    final result = await authController.register(
-                        emailController.text, psswdController.text);
-
-                    if (mounted) {
-                      if (result != null) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content:
-                                Text('Sukses daftar sebagai ${result.email}')));
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Masuk gagal')));
-                      }
-                    }
-                    emailController.clear();
-                    psswdController.clear();
+                    _register();
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -123,5 +110,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       )),
     );
+  }
+
+  Future _register() async {
+    try {
+      final result = await authController.register(
+          emailController.text, psswdController.text);
+      _showSnackbar('Sukses daftar sebagai ${result.user?.email}');
+
+      if (mounted) {
+        Navigator.pop(context);
+      }
+    } on FirebaseAuthException catch (e) {
+      _showSnackbar('Daftar gagal: ${e.message}');
+    } catch (e) {
+      _showSnackbar('Daftar gagal');
+    }
+
+    emailController.clear();
+    psswdController.clear();
+  }
+
+  _showSnackbar(String message) {
+    if (mounted) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(message)));
+    }
   }
 }
