@@ -1,13 +1,13 @@
 import 'package:fit_movies_app/controllers/favourite_movie_controller/favourite_movie_controller.dart';
 import 'package:fit_movies_app/data/db/local_database_service.dart';
-import 'package:fit_movies_app/data/firestore/firestore_service.dart';
+import 'package:fit_movies_app/data/firestore/firestore_movie_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../utils/utils.dart';
 
-class MockFirestoreService extends Mock implements FirestoreService {}
+class MockFirestoreService extends Mock implements FirestoreMovieService {}
 
 void main() {
   group('Favourite Movie Controller Test', () {

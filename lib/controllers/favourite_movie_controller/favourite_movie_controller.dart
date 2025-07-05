@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fit_movies_app/data/db/favourite_movie.dart';
-import 'package:fit_movies_app/data/firestore/firestore_service.dart';
+import 'package:fit_movies_app/data/firestore/firestore_movie_service.dart';
 import 'package:get/get.dart';
 
 class FavouriteMovieController extends GetxController {
-  final FirestoreService dbService;
+  final FirestoreMovieService dbService;
 
   FavouriteMovieController(this.dbService);
 
@@ -25,14 +25,14 @@ class FavouriteMovieController extends GetxController {
     _isFavourite.value = status;
   }
 
-  Future<void> addFavouriteMovie(FavouriteMovie movie) async {
+  Future addFavouriteMovie(FavouriteMovie movie) async {
     await dbService.addFavouriteMovie(movie);
     _isFavourite.value = true;
 
     await getAllFavouriteMovies();
   }
 
-  Future<void> removeFavouriteMovie(int movieId) async {
+  Future removeFavouriteMovie(int movieId) async {
     await dbService.removeFavouriteMovie(movieId);
     _isFavourite.value = false;
 

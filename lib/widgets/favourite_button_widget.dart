@@ -1,6 +1,6 @@
 import 'package:fit_movies_app/controllers/favourite_movie_controller/favourite_movie_controller.dart';
 import 'package:fit_movies_app/data/db/favourite_movie.dart';
-import 'package:fit_movies_app/data/firestore/firestore_service.dart';
+import 'package:fit_movies_app/data/firestore/firestore_movie_service.dart';
 import 'package:fit_movies_app/data/responses/movie_detail_response.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,7 +19,7 @@ class _FavouriteButtonWidgetState extends State<FavouriteButtonWidget> {
   static final DateFormat formatter = DateFormat("dd MMMM yyyy");
 
   FavouriteMovieController favouriteController =
-      Get.put(FavouriteMovieController(Get.put(FirestoreService())));
+      Get.put(FavouriteMovieController(Get.put(FirestoreMovieService())));
 
   @override
   void initState() {

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fit_movies_app/data/db/favourite_movie.dart';
 
-class FirestoreService {
+class FirestoreMovieService {
   final moviesRef = FirebaseFirestore.instance
       .collection('favourite-movie')
       .withConverter<FavouriteMovie>(

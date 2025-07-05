@@ -3,7 +3,7 @@ import 'package:fit_movies_app/controllers/favourite_movie_controller/favourite_
 import 'package:fit_movies_app/controllers/movie_list_controller/movie_filter.dart';
 import 'package:fit_movies_app/controllers/movie_list_controller/movie_list_controller.dart';
 import 'package:fit_movies_app/data/db/favourite_movie.dart';
-import 'package:fit_movies_app/data/firestore/firestore_service.dart';
+import 'package:fit_movies_app/data/firestore/firestore_movie_service.dart';
 import 'package:fit_movies_app/widgets/favourite_movie_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,7 +17,7 @@ class FavouriteMovieScreen extends StatefulWidget {
 
 class _FavouriteMovieScreenState extends State<FavouriteMovieScreen> {
   FavouriteMovieController favouriteController =
-      Get.put(FavouriteMovieController(Get.put(FirestoreService())));
+      Get.put(FavouriteMovieController(Get.put(FirestoreMovieService())));
 
   MovieListController movieListController = Get.find();
 

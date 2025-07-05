@@ -1,5 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fit_movies_app/controllers/auth_controller/auth_controller.dart';
+import 'package:fit_movies_app/controllers/user_controller/user_controller.dart';
 import 'package:fit_movies_app/data/auth/firebase_auth_service.dart';
+import 'package:fit_movies_app/data/firestore/firestore_user_service.dart';
+import 'package:fit_movies_app/data/model/user_data.dart';
 import 'package:fit_movies_app/navigations/navigation_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,6 +21,9 @@ class _SignInScreenState extends State<SignInScreen> {
 
   AuthController authController =
       Get.put(AuthController(Get.put(FirebaseAuthService())));
+
+  UserController userController =
+      Get.put(UserController(Get.put(FirestoreUserService())));
 
   bool passwordVisible = true;
   @override
@@ -74,21 +81,7 @@ class _SignInScreenState extends State<SignInScreen> {
               SizedBox.square(dimension: 16),
               ElevatedButton(
                   onPressed: () async {
-                    final result = await authController.signIn(
-                        emailController.text, psswdController.text);
-
-                    if (mounted) {
-                      if (result != null) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content:
-                                Text('Sukses masuk sebagai ${result.email}')));
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Masuk gagal')));
-                      }
-                    }
-                    emailController.clear();
-                    psswdController.clear();
+                    _signInWithEmail();
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -106,18 +99,7 @@ class _SignInScreenState extends State<SignInScreen> {
               SizedBox.square(dimension: 16),
               ElevatedButton(
                   onPressed: () async {
-                    final result = await authController.signInWithGoogle();
-
-                    if (mounted) {
-                      if (result != null) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text(
-                                'Sukses masuk sebagai ${result.user?.email}')));
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Masuk gagal')));
-                      }
-                    }
+                    _signInWithGoogle();
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -148,5 +130,54 @@ class _SignInScreenState extends State<SignInScreen> {
         ),
       )),
     );
+  }
+
+  Future _signInWithEmail() async {
+    try {
+      final result = await authController.signIn(
+          emailController.text, psswdController.text);
+
+      if (result != null) {
+        userController.addUser(UserData(
+            userId: result.uid,
+            userName: result.displayName ?? '',
+            userEmail: result.email ?? ''));
+      }
+
+      _showSnackbar('Sukses masuk sebagai ${result?.email}');
+    } on FirebaseAuthException catch (e) {
+      _showSnackbar('Masuk gagal: ${e.message}');
+    } catch (e) {
+      _showSnackbar('Masuk gagal');
+    }
+
+    emailController.clear();
+    psswdController.clear();
+  }
+
+  Future _signInWithGoogle() async {
+    try {
+      final result = await authController.signInWithGoogle();
+
+      if (result != null) {
+        userController.addUser(UserData(
+            userId: result.user?.uid ?? '',
+            userName: result.user?.displayName ?? '',
+            userEmail: result.user?.email ?? ''));
+      }
+
+      _showSnackbar('Sukses masuk sebagai ${result?.user?.email}');
+    } on FirebaseAuthException catch (e) {
+      _showSnackbar('Masuk gagal: ${e.message}');
+    } catch (e) {
+      _showSnackbar('Masuk gagal');
+    }
+  }
+
+  _showSnackbar(String message) {
+    if (mounted) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(message)));
+    }
   }
 }
