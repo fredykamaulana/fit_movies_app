@@ -13,13 +13,13 @@ class AuthController {
     return await authService.registerWithEmailAndPassword(email, password);
   }
 
+  Future<UserCredential?> signInWithGoogle() async {
+    return authService.signInWithGoogle();
+  }
+
   Stream<User?> checkUserSignInState() {
     final state = authService.checkUserSignInState();
     return state;
-  }
-
-  Future<UserCredential?> signInWithGoogle() async {
-    return authService.signInWithGoogle();
   }
 
   signOut() {

@@ -23,11 +23,6 @@ class FirebaseAuthService {
         email: email, password: password);
   }
 
-  Stream<User?> checkUserSignInState() {
-    final state = firebaseAuth.authStateChanges();
-    return state;
-  }
-
   Future<UserCredential> signInWithGoogle() async {
     unawaited(googleSignIn.initialize(
         clientId: clientId, serverClientId: serverClientId));
@@ -44,6 +39,11 @@ class FirebaseAuthService {
 
     // Once signed in, return the UserCredential
     return await firebaseAuth.signInWithCredential(credential);
+  }
+
+  Stream<User?> checkUserSignInState() {
+    final state = firebaseAuth.authStateChanges();
+    return state;
   }
 
   signOut() {
