@@ -3,7 +3,7 @@ import 'package:fit_movies_app/data/model/user_data.dart';
 
 class FirestoreUserService {
   final _userRef = FirebaseFirestore.instance
-      .collection('favourite-movie')
+      .collection('users')
       .withConverter<UserData>(
         fromFirestore: (snapshots, _) => UserData.fromJson(snapshots.data()!),
         toFirestore: (user, _) => user.toJson(),
