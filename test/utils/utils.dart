@@ -1,4 +1,4 @@
-import 'package:fit_movies_app/data/db/favourite_movie.dart';
+import 'package:fit_movies_app/data/model/favourite_movie.dart';
 import 'package:fit_movies_app/data/responses/movie_detail_response.dart';
 import 'package:fit_movies_app/data/responses/movie_list_response.dart';
 
@@ -17,16 +17,16 @@ List<Result> dummyMovies = [
       title: 'title',
       video: false,
       voteAverage: 0.0,
-      voteCount: 123
-  )
+      voteCount: 123)
 ];
 
-MovieListResponse dummyMovieListResponse({List<Result> movies = const []}) => MovieListResponse(
-  page: 1,
-  results: movies,
-  totalResults: 0,
-  totalPages: 0,
-);
+MovieListResponse dummyMovieListResponse({List<Result> movies = const []}) =>
+    MovieListResponse(
+      page: 1,
+      results: movies,
+      totalResults: 0,
+      totalPages: 0,
+    );
 
 MovieDetailResponse dummyMovieDetailResponse = MovieDetailResponse(
   adult: false,
