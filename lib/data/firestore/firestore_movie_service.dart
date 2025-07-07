@@ -1,16 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fit_movies_app/data/db/favourite_movie.dart';
-import 'package:fit_movies_app/data/model/user_data.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fit_movies_app/data/model/favourite_movie.dart';
 
 class FirestoreMovieService {
-  final _userRef = FirebaseFirestore.instance
-      .collection('users')
-      .withConverter<UserData>(
-        fromFirestore: (snapshots, _) => UserData.fromJson(snapshots.data()!),
-        toFirestore: (user, _) => user.toJson(),
-      );
+  final _currentUserId = FirebaseAuth.instance.currentUser?.uid;
 
-  final moviesRef = FirebaseFirestore.instance
+  late final _currentUserRef =
+      FirebaseFirestore.instance.collection('users').doc(_currentUserId);
+
+  late final _moviesRef = _currentUserRef
       .collection('favourite-movie')
       .withConverter<FavouriteMovie>(
         fromFirestore: (snapshots, _) =>
@@ -19,26 +17,26 @@ class FirestoreMovieService {
       );
 
   Future addFavouriteMovie(FavouriteMovie movie) async {
-    await moviesRef.doc(movie.id.toString()).set(movie);
+    await _moviesRef.doc(movie.id.toString()).set(movie);
   }
 
   Future removeFavouriteMovie(int movieId) async {
-    await moviesRef.doc(movieId.toString()).delete();
+    await _moviesRef.doc(movieId.toString()).delete();
   }
 
   Future<bool> isFavourite(int movieId) async {
-    final result = await moviesRef.doc(movieId.toString()).get();
+    final result = await _moviesRef.doc(movieId.toString()).get();
     return result.exists;
   }
 
   Future<List<FavouriteMovie>> getAllFavouriteMovies() async {
-    final dataSnapshot = await moviesRef.get();
+    final dataSnapshot = await _moviesRef.get();
 
     return dataSnapshot.docs.map((doc) => doc.data()).toList();
   }
 
   //For real-time favourite movie list
   Stream<QuerySnapshot> getAllFavouriteMoviesRealTime() {
-    return moviesRef.snapshots();
+    return _moviesRef.snapshots();
   }
 }
