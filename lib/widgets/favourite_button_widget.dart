@@ -1,5 +1,5 @@
 import 'package:fit_movies_app/controllers/favourite_movie_controller/favourite_movie_controller.dart';
-import 'package:fit_movies_app/data/db/favourite_movie.dart';
+import 'package:fit_movies_app/data/model/favourite_movie.dart';
 import 'package:fit_movies_app/data/firestore/firestore_movie_service.dart';
 import 'package:fit_movies_app/data/responses/movie_detail_response.dart';
 import 'package:flutter/material.dart';
