@@ -1,5 +1,4 @@
 import 'package:fit_movies_app/controllers/favourite_movie_controller/favourite_movie_controller.dart';
-import 'package:fit_movies_app/data/db/local_database_service.dart';
 import 'package:fit_movies_app/data/firestore/firestore_movie_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
@@ -112,7 +111,7 @@ void main() {
     tearDown(() {
       controller.dispose();
       Get.delete<FavouriteMovieController>();
-      Get.delete<LocalDatabaseService>();
+      Get.delete<MockFirestoreService>();
     });
   });
 }
