@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fit_movies_app/controllers/favourite_movie_controller/favourite_movie_controller.dart';
 import 'package:fit_movies_app/controllers/movie_list_controller/movie_filter.dart';
 import 'package:fit_movies_app/controllers/movie_list_controller/movie_list_controller.dart';
-import 'package:fit_movies_app/data/db/favourite_movie.dart';
+import 'package:fit_movies_app/data/model/favourite_movie.dart';
 import 'package:fit_movies_app/data/firestore/firestore_movie_service.dart';
 import 'package:fit_movies_app/widgets/favourite_movie_item.dart';
 import 'package:flutter/material.dart';
@@ -98,7 +98,9 @@ class _StreamFavouriteMovieState extends State<StreamFavouriteMovie> {
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return Center(
-              child: Text('Something went wrong'),
+              child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Text('Something went wrong: ${snapshot.error}')),
             );
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
