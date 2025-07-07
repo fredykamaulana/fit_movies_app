@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fit_movies_app/data/db/favourite_movie.dart';
+import 'package:fit_movies_app/data/model/favourite_movie.dart';
 import 'package:fit_movies_app/data/firestore/firestore_movie_service.dart';
 import 'package:get/get.dart';
 
