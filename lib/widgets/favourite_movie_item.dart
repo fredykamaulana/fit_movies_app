@@ -1,4 +1,4 @@
-import 'package:fit_movies_app/data/db/favourite_movie.dart';
+import 'package:fit_movies_app/data/model/favourite_movie.dart';
 import 'package:fit_movies_app/data/network/dio_api_client.dart';
 import 'package:fit_movies_app/navigations/navigation_routes.dart';
 import 'package:flutter/material.dart';
@@ -12,38 +12,31 @@ class FavouriteMovieItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(
-            context,
-            NavigationRoutes.movieDetail.name,
-            arguments: movie.id
-        );
+        Navigator.pushNamed(context, NavigationRoutes.movieDetail.name,
+            arguments: movie.id);
       },
       child: Card(
-        child: AspectRatio(
-          aspectRatio: 16/9,
-          child: Stack(
-            alignment: AlignmentDirectional.bottomStart,
-            fit: StackFit.expand,
-            clipBehavior: Clip.none,
-            children: [
-              ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: Hero(
-                      tag: movie.id,
-                      child: Image.network(
-                        '$imageUrl${movie.posterPath}',
-                        fit: BoxFit.fill,
-                        color: Colors.black.withValues(alpha: 100),
-                        colorBlendMode: BlendMode.darken,
-                      )
-                  )
-              ),
-
-              MovieShortInfoView(movie: movie)
-            ],
-          ),
-        )
-      ),
+          child: AspectRatio(
+        aspectRatio: 16 / 9,
+        child: Stack(
+          alignment: AlignmentDirectional.bottomStart,
+          fit: StackFit.expand,
+          clipBehavior: Clip.none,
+          children: [
+            ClipRRect(
+                borderRadius: BorderRadius.circular(10.0),
+                child: Hero(
+                    tag: movie.id,
+                    child: Image.network(
+                      '$imageUrl${movie.posterPath}',
+                      fit: BoxFit.fill,
+                      color: Colors.black.withValues(alpha: 100),
+                      colorBlendMode: BlendMode.darken,
+                    ))),
+            MovieShortInfoView(movie: movie)
+          ],
+        ),
+      )),
     );
   }
 }
@@ -83,15 +76,12 @@ class MovieShortInfoView extends StatelessWidget {
               style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white
-              ),
+                  color: Colors.white),
             ),
             const SizedBox(height: 4.0),
-            Text(
-                movie.releaseDate,
+            Text(movie.releaseDate,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(fontSize: 12, color: Colors.white70)
-            ),
+                style: const TextStyle(fontSize: 12, color: Colors.white70)),
           ],
         ),
       ),
