@@ -1,4 +1,4 @@
-import 'package:fit_movies_app/data/network/dio_api_client.dart';
+import 'package:fit_movies_app/data/network/http_api_client.dart';
 import 'package:fit_movies_app/data/responses/movie_list_response.dart';
 import 'package:fit_movies_app/navigations/navigation_routes.dart';
 import 'package:flutter/material.dart';
@@ -15,11 +15,8 @@ class MovieItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(
-            context,
-            NavigationRoutes.movieDetail.name,
-            arguments: movie.id
-        );
+        Navigator.pushNamed(context, NavigationRoutes.movieDetail.name,
+            arguments: movie.id);
       },
       child: Card(
         child: Stack(
@@ -36,10 +33,7 @@ class MovieItem extends StatelessWidget {
                       fit: BoxFit.fill,
                       color: Colors.black.withValues(alpha: 100),
                       colorBlendMode: BlendMode.darken,
-                    )
-                )
-            ),
-
+                    ))),
             MovieShortInfoView(movie: movie),
           ],
         ),
@@ -85,15 +79,12 @@ class MovieShortInfoView extends StatelessWidget {
               style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white
-              ),
+                  color: Colors.white),
             ),
             const SizedBox(height: 4.0),
-            Text(
-                formatter.format(movie.releaseDate),
+            Text(formatter.format(movie.releaseDate),
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(fontSize: 12, color: Colors.white70)
-            ),
+                style: const TextStyle(fontSize: 12, color: Colors.white70)),
           ],
         ),
       ),

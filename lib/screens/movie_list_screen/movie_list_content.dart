@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class MovieListContent extends StatefulWidget {
-
   const MovieListContent({super.key});
 
   @override
@@ -16,43 +15,11 @@ class MovieListContent extends StatefulWidget {
 }
 
 class _MovieListContentState extends State<MovieListContent> {
-
-  final ScrollController _scrollController = ScrollController();
-
   MovieListController movieListController = Get.find();
-
-  @override
-  void initState() {
-    _scrollController.addListener(_loadMoreMovies);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  void _loadMoreMovies() {
-    if (_scrollController.position.pixels ==
-        _scrollController.position.maxScrollExtent) {
-      if(movieListController.isSearching) {
-        movieListController.searchMovie(
-            movieListController.searchQuery,
-            movieListController.currentPage + 1
-        );
-      }
-      movieListController.getMovieList(
-          movieListController.selectedFilter,
-          movieListController.currentPage + 1
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
-
       int currentCrossAxisCount = 2; // Default value
       if (constraints.maxWidth > 400) {
         currentCrossAxisCount = constraints.maxWidth ~/ 200;
@@ -61,7 +28,6 @@ class _MovieListContentState extends State<MovieListContent> {
       return Padding(
         padding: const EdgeInsets.all(16.0),
         child: CustomScrollView(
-          controller: _scrollController,
           slivers: [
             SliverToBoxAdapter(
               child: Padding(
@@ -82,15 +48,12 @@ class _MovieListContentState extends State<MovieListContent> {
                 ),
               ),
             ),
-
             PinnedHeaderSliver(
               child: FloatingNavbar(),
             ),
-
             SliverToBoxAdapter(
               child: const SizedBox(height: 16),
             ),
-
             SliverToBoxAdapter(
               child: Obx(() {
                 return GridView.builder(
@@ -104,30 +67,26 @@ class _MovieListContentState extends State<MovieListContent> {
                   ),
                   itemCount: movieListController.movieList.length,
                   itemBuilder: (context, index) {
-                    return MovieItem(movie: movieListController.movieList[index]);
+                    return MovieItem(
+                        movie: movieListController.movieList[index]);
                   },
                 );
               }),
             ),
-
             SliverToBoxAdapter(
               child: const SizedBox(height: 16),
             ),
-
-            SliverToBoxAdapter(
-              child: Obx(() {
-                return switch (movieListController.pagingState) {
-                  RemoteStateLoading() => const Center(
-                      child: CircularProgressIndicator()
+            SliverToBoxAdapter(child: Obx(() {
+              return switch (movieListController.remoteState) {
+                RemoteStateLoading() =>
+                  const Center(child: CircularProgressIndicator()),
+                RemoteStateError() => const Center(
+                    child:
+                        Text("Error loading movies. Please try again later."),
                   ),
-                  RemoteStateError() => const Center(
-                    child: Text("Error loading movies. Please try again later."),
-                  ),
-                  _ => const SizedBox.shrink(),
-                };
-              })
-            ),
-
+                _ => const SizedBox.shrink(),
+              };
+            })),
             SliverToBoxAdapter(
               child: const SizedBox(height: 16),
             ),
@@ -143,12 +102,11 @@ class MovieListBuilder extends StatelessWidget {
   final Function() fetchNextPage;
   final int currentCrossAxisCount; // Default value, can be adjusted
 
-  const MovieListBuilder({
-    super.key,
-    required this.state,
-    required this.fetchNextPage,
-    required this.currentCrossAxisCount
-  });
+  const MovieListBuilder(
+      {super.key,
+      required this.state,
+      required this.fetchNextPage,
+      required this.currentCrossAxisCount});
 
   @override
   Widget build(BuildContext context) {
@@ -162,8 +120,7 @@ class MovieListBuilder extends StatelessWidget {
         childAspectRatio: 0.7, // Adjust aspect ratio as needed
       ),
       builderDelegate: PagedChildBuilderDelegate(
-          itemBuilder: (context, item, index) => MovieItem(movie: item)
-      ),
+          itemBuilder: (context, item, index) => MovieItem(movie: item)),
     );
   }
 }

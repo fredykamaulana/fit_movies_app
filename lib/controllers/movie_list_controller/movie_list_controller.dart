@@ -12,47 +12,40 @@ class MovieListController extends GetxController {
 
   final SearchService searchService = Get.put(SearchService());
 
-  final Rx<RemoteState> _pagingState = Rx<RemoteState>(RemoteStateNone());
+  final Rx<RemoteState> _remoteState = Rx<RemoteState>(RemoteStateNone());
 
-  get pagingState => _pagingState.value;
-
-  final RxInt _currentPage = 1.obs;
-
-  get currentPage => _currentPage.value;
+  get remoteState => _remoteState.value;
 
   final Rx<List<Result>> _movieList = Rx<List<Result>>([]);
 
   get movieList => _movieList.value;
 
-  Future<List<Result>> getMovieList(String filter, int page) async {
+  Future<List<Result>> getMovieList(String filter) async {
     try {
-
-      if (_pagingState.value is RemoteStateLoading) {
+      if (_remoteState.value is RemoteStateLoading) {
         return _movieList.value; // Return current list if already loading
       }
 
-      _pagingState.value = RemoteStateLoading();
+      _remoteState.value = RemoteStateLoading();
 
-      final result = await movieService.fetchMovies(filter, page);
+      final result = await movieService.fetchMovies(filter);
 
       if (result.results.isEmpty) {
-        _pagingState.value = RemoteStateError('No more movies found');
+        _remoteState.value = RemoteStateError('No more movies found');
       } else {
-        _pagingState.value = RemoteStateSuccess<MovieListResponse>(result);
-
-        _currentPage.value = result.page;
-        _movieList.value = _movieList.value + result.results;
+        _remoteState.value = RemoteStateSuccess<MovieListResponse>(result);
+        _movieList.value = result.results;
       }
 
       return result.results;
     } on Exception catch (e) {
-      _pagingState.value = RemoteStateError(e.toString());
+      _remoteState.value = RemoteStateError(e.toString());
       rethrow;
     }
   }
 
   /// **
-  /// Filter movie business logic ###############################################
+  /// Filter movie business logic ##############################################
   /// **
 
   final RxString _selectedFilter = MovieFilter.nowPlaying.name.obs;
@@ -61,18 +54,17 @@ class MovieListController extends GetxController {
 
   setFilter(MovieFilter filter) {
     if (_selectedFilter.value != filter.name) {
-      if(!filter.name.contains('@')) {
+      if (!filter.name.contains('@')) {
         _movieList.value = [];
-        _currentPage.value = 1;
-        _pagingState.value = RemoteStateNone();
-        getMovieList(filter.name, _currentPage.value);
+        _remoteState.value = RemoteStateNone();
+        getMovieList(filter.name);
       }
       _selectedFilter.value = filter.name;
     }
   }
 
   /// **
-  /// Search business logic ###############################################
+  /// Search business logic ####################################################
   /// **
 
   final RxBool _isSearching = false.obs;
@@ -84,9 +76,8 @@ class MovieListController extends GetxController {
     if (!value) {
       _searchQuery.value = '';
       _movieList.value = [];
-      _currentPage.value = 1;
-      _pagingState.value = RemoteStateNone();
-      getMovieList(_selectedFilter.value, _currentPage.value);
+      _remoteState.value = RemoteStateNone();
+      getMovieList(_selectedFilter.value);
     }
   }
 
@@ -98,31 +89,26 @@ class MovieListController extends GetxController {
     _searchQuery.value = query;
   }
 
-  Future<List<Result>> searchMovie(String query, int page) async {
+  Future<List<Result>> searchMovie(String query) async {
     try {
-
-      if (_pagingState.value is RemoteStateLoading) {
+      if (_remoteState.value is RemoteStateLoading) {
         return _movieList.value; // Return current list if already loading
       }
 
-      _pagingState.value = RemoteStateLoading();
+      _remoteState.value = RemoteStateLoading();
 
-      if (page == 1) _movieList.value = [];
-
-      final result = await searchService.searchMovies(query, page);
+      final result = await searchService.searchMovies(query);
 
       if (result.results.isEmpty) {
-        _pagingState.value = RemoteStateError('No more movies found');
+        _remoteState.value = RemoteStateError('No more movies found');
       } else {
-        _pagingState.value = RemoteStateSuccess<MovieListResponse>(result);
-
-        _currentPage.value = result.page;
-        _movieList.value = _movieList.value + result.results;
+        _remoteState.value = RemoteStateSuccess<MovieListResponse>(result);
+        _movieList.value = result.results;
       }
 
       return result.results;
     } on Exception catch (e) {
-      _pagingState.value = RemoteStateError(e.toString());
+      _remoteState.value = RemoteStateError(e.toString());
       rethrow;
     }
   }
