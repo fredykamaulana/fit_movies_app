@@ -19,43 +19,47 @@ void main() {
     late MovieListController controller;
     late MovieService movieService;
     late SearchService searchService;
-    
+
     setUp(() {
       movieService = Get.put(MockMovieService());
       searchService = Get.put(MockSearchService());
       controller = Get.put(MovieListController(movieService: movieService));
     });
 
-    test('When load movie list and list is empty remote state should return error empty list', () async {
+    test(
+        'When load movie list and list is empty remote state should return error empty list',
+        () async {
       // Arrange
       when(() => movieService.fetchMovies(MovieFilter.nowPlaying.name, 1))
-          .thenAnswer((_) => Future.value(
-          dummyMovieListResponse()
-      ));
+          .thenAnswer((_) =>
+              Future.value(RemoteStateSuccess(dummyMovieListResponse())));
 
       // Act
       await controller.getMovieList(MovieFilter.nowPlaying.name, 1);
 
       // Assert
-      verify(() => movieService.fetchMovies(MovieFilter.nowPlaying.name, 1)).called(1);
+      verify(() => movieService.fetchMovies(MovieFilter.nowPlaying.name, 1))
+          .called(1);
 
       // Assert
       final remoteState = controller.pagingState;
       expect(remoteState, isA<RemoteStateError>());
     });
 
-    test('When load movie list and list is not empty remote state should return success data', () async {
+    test(
+        'When load movie list and list is not empty remote state should return success data',
+        () async {
       // Arrange
       when(() => movieService.fetchMovies(MovieFilter.nowPlaying.name, 1))
           .thenAnswer((_) => Future.value(
-          dummyMovieListResponse(movies: dummyMovies)
-      ));
+              RemoteStateSuccess(dummyMovieListResponse(movies: dummyMovies))));
 
       // Act
       await controller.getMovieList(MovieFilter.nowPlaying.name, 1);
 
       // Assert
-      verify(() => movieService.fetchMovies(MovieFilter.nowPlaying.name, 1)).called(1);
+      verify(() => movieService.fetchMovies(MovieFilter.nowPlaying.name, 1))
+          .called(1);
 
       // Assert
       final remoteState = controller.pagingState;
@@ -66,36 +70,40 @@ void main() {
       expect(movieList, isNotEmpty);
     });
 
-    test('When load next page movie list and list is empty paging state should return error empty list', () async {
+    test(
+        'When load next page movie list and list is empty paging state should return error empty list',
+        () async {
       // Arrange
       when(() => movieService.fetchMovies(MovieFilter.nowPlaying.name, 2))
-          .thenAnswer((_) => Future.value(
-          dummyMovieListResponse()
-      ));
+          .thenAnswer((_) =>
+              Future.value(RemoteStateSuccess(dummyMovieListResponse())));
 
       // Act
       await controller.getMovieList(MovieFilter.nowPlaying.name, 2);
 
       // Assert
-      verify(() => movieService.fetchMovies(MovieFilter.nowPlaying.name, 2)).called(1);
+      verify(() => movieService.fetchMovies(MovieFilter.nowPlaying.name, 2))
+          .called(1);
 
       // Assert
       final pagingState = controller.pagingState;
       expect(pagingState, isA<RemoteStateError>());
     });
 
-    test('When load next page movie list and list is not empty paging state should return success data', () async {
+    test(
+        'When load next page movie list and list is not empty paging state should return success data',
+        () async {
       // Arrange
       when(() => movieService.fetchMovies(MovieFilter.nowPlaying.name, 2))
           .thenAnswer((_) => Future.value(
-          dummyMovieListResponse(movies: dummyMovies)
-      ));
+              RemoteStateSuccess(dummyMovieListResponse(movies: dummyMovies))));
 
       // Act
       await controller.getMovieList(MovieFilter.nowPlaying.name, 2);
 
       // Assert
-      verify(() => movieService.fetchMovies(MovieFilter.nowPlaying.name, 2)).called(1);
+      verify(() => movieService.fetchMovies(MovieFilter.nowPlaying.name, 2))
+          .called(1);
 
       // Assert
       final pagingState = controller.pagingState;
@@ -106,7 +114,8 @@ void main() {
       expect(movieList, isNotEmpty);
     });
 
-    test('selectedFilter should contain desired value when set a movie filter', () {
+    test('selectedFilter should contain desired value when set a movie filter',
+        () {
       // Arrange
       final filter = MovieFilter.nowPlaying;
 
@@ -139,14 +148,14 @@ void main() {
       expect(controller.searchQuery, query);
     });
 
-    test('When search movie list and list is empty remote state should return error empty list', () async {
+    test(
+        'When search movie list and list is empty remote state should return error empty list',
+        () async {
       // Arrange
       final query = 'Jumbo';
 
-      when(() => searchService.searchMovies(query, 1))
-          .thenAnswer((_) => Future.value(
-          dummyMovieListResponse()
-      ));
+      when(() => searchService.searchMovies(query, 1)).thenAnswer(
+          (_) => Future.value(RemoteStateSuccess(dummyMovieListResponse())));
 
       // Act
       await controller.searchMovie(query, 1);
@@ -159,14 +168,15 @@ void main() {
       expect(remoteState, isA<RemoteStateError>());
     });
 
-    test('When search movie list and list is not empty remote state should return success data', () async {
+    test(
+        'When search movie list and list is not empty remote state should return success data',
+        () async {
       // Arrange
       final query = 'Jumbo';
 
-      when(() => searchService.searchMovies(query, 1))
-          .thenAnswer((_) => Future.value(
-          dummyMovieListResponse(movies: dummyMovies)
-      ));
+      when(() => searchService.searchMovies(query, 1)).thenAnswer((_) =>
+          Future.value(
+              RemoteStateSuccess(dummyMovieListResponse(movies: dummyMovies))));
 
       // Act
       await controller.searchMovie(query, 1);
@@ -184,6 +194,5 @@ void main() {
       Get.delete<MovieListController>();
       Get.delete<MovieService>();
     });
-
   });
 }

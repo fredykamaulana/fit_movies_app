@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:fit_movies_app/data/state/remote_state.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 const String imageUrl = 'https://image.tmdb.org/t/p/w500';
@@ -27,6 +28,17 @@ class DioApiClient {
       },
       receiveDataWhenStatusError: true,
     ));
+
+    _dio.interceptors.add(InterceptorsWrapper(
+      onError: (error, handler) {
+        _dioErorrHandler(error);
+        return handler.next(error);
+      },
+    ));
+  }
+
+  _dioErorrHandler(DioException error) {
+    return RemoteStateError('${error.message}');
   }
 
   late final Dio _dio;

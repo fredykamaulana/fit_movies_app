@@ -1,4 +1,3 @@
-
 import 'package:fit_movies_app/controllers/movie_detail_controller/movie_detail_controller.dart';
 import 'package:fit_movies_app/data/services/movie_service.dart';
 import 'package:fit_movies_app/data/state/remote_state.dart';
@@ -21,9 +20,9 @@ void main() {
       controller = Get.put(MovieDetailController(movieService: movieService));
     });
 
-    test('When load movie detail should return movie detail data', () async{
-      when(() => movieService.fetchMovieDetails(0))
-          .thenAnswer((_) => Future.value(dummyMovieDetailResponse));
+    test('When load movie detail should return movie detail data', () async {
+      when(() => movieService.fetchMovieDetails(0)).thenAnswer(
+          (_) => Future.value(RemoteStateSuccess(dummyMovieDetailResponse)));
 
       // Act
       await controller.getMovieDetail(0);
@@ -35,7 +34,6 @@ void main() {
       final remoteState = controller.remoteState;
       expect(remoteState, isA<RemoteStateSuccess>());
     });
-
 
     tearDown(() {
       controller.dispose();

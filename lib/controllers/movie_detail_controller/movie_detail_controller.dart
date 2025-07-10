@@ -12,14 +12,9 @@ class MovieDetailController extends GetxController {
   get remoteState => _remoteState.value;
 
   Future getMovieDetail(int movieId) async {
-    try {
-      _remoteState.value = RemoteStateLoading();
+    _remoteState.value = RemoteStateLoading();
 
-      final result = await movieService.fetchMovieDetails(movieId);
-      _remoteState.value = RemoteStateSuccess(result);
-
-    } on Exception catch (e) {
-      _remoteState.value = RemoteStateError(e.toString());
-    }
+    final result = await movieService.fetchMovieDetails(movieId);
+    _remoteState.value = result;
   }
 }

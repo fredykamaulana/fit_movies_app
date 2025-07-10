@@ -6,10 +6,12 @@ class RemoteStateNone extends RemoteState {
   @override
   List<Object?> get props => [];
 }
+
 class RemoteStateLoading extends RemoteState {
   @override
   List<Object?> get props => [];
 }
+
 class RemoteStateError extends RemoteState {
   final String error;
 
@@ -18,6 +20,7 @@ class RemoteStateError extends RemoteState {
   @override
   List<Object?> get props => [error];
 }
+
 class RemoteStateSuccess<T> extends RemoteState {
   final T data;
 
