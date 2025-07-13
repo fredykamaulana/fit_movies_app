@@ -11,13 +11,11 @@ class FloatingSearchBar extends StatefulWidget {
 }
 
 class _FloatingSearchBarState extends State<FloatingSearchBar> {
-
   MovieListController movieListController = Get.find();
   TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
-
     Future.microtask(() {
       if (movieListController.isSearching) {
         searchController.text = movieListController.searchQuery;
@@ -31,7 +29,6 @@ class _FloatingSearchBarState extends State<FloatingSearchBar> {
 
   @override
   Widget build(BuildContext context) {
-
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -46,27 +43,19 @@ class _FloatingSearchBarState extends State<FloatingSearchBar> {
               onChanged: (text) {
                 movieListController.setSearchQuery(text);
               },
-            )
-        ),
+            )),
         IconButton(
-          icon: Icon(
-              Icons.send,
-              color: Colors.cyan
-          ),
+          icon: Icon(Icons.send, color: Colors.cyan),
           onPressed: () {
-            if(movieListController.searchQuery.isNotEmpty == true) {
-              movieListController.searchMovie(
-                  movieListController.searchQuery,
-                  movieListController.currentPage
-              );
+            if (movieListController.searchQuery.isNotEmpty == true) {
+              movieListController.searchMovie(movieListController.searchQuery, 1
+                  //movieListController.currentPage
+                  );
             }
           },
         ),
         IconButton(
-          icon: Icon(
-              Icons.close,
-              color: Colors.cyan
-          ),
+          icon: Icon(Icons.close, color: Colors.cyan),
           onPressed: () {
             movieListController.setIsSearching(false);
             movieListController.setFilter(MovieFilter.nowPlaying);

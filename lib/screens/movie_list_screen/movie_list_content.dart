@@ -15,33 +15,35 @@ class MovieListContent extends StatefulWidget {
 }
 
 class _MovieListContentState extends State<MovieListContent> {
-  final ScrollController _scrollController = ScrollController();
+  //final ScrollController _scrollController = ScrollController();
 
   MovieListController movieListController = Get.find();
 
   @override
   void initState() {
-    _scrollController.addListener(_loadMoreMovies);
+    //_scrollController.addListener(_loadMoreMovies);
+
     super.initState();
   }
 
   @override
   void dispose() {
-    _scrollController.dispose();
+    //_scrollController.dispose();
+
     super.dispose();
   }
 
-  void _loadMoreMovies() {
-    if (_scrollController.position.pixels ==
-        _scrollController.position.maxScrollExtent) {
-      if (movieListController.isSearching) {
-        movieListController.searchMovie(movieListController.searchQuery,
-            movieListController.currentPage + 1);
-      }
-      movieListController.getMovieList(movieListController.selectedFilter,
-          movieListController.currentPage + 1);
-    }
-  }
+  // void _loadMoreMovies() {
+  //   if (_scrollController.position.pixels ==
+  //       _scrollController.position.maxScrollExtent) {
+  //     if (movieListController.isSearching) {
+  //       movieListController.searchMovie(movieListController.searchQuery,
+  //           movieListController.currentPage + 1);
+  //     }
+  //     movieListController.getMovieList(movieListController.selectedFilter,
+  //         movieListController.currentPage + 1);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +56,7 @@ class _MovieListContentState extends State<MovieListContent> {
       return Padding(
         padding: const EdgeInsets.all(16.0),
         child: CustomScrollView(
-          controller: _scrollController,
+          //controller: _scrollController,
           slivers: [
             SliverToBoxAdapter(
               child: Padding(
