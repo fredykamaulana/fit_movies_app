@@ -9,7 +9,7 @@ class MovieDetailController extends GetxController {
 
   final Rx<RemoteState> _remoteState = Rx<RemoteState>(RemoteStateNone());
 
-  get remoteState => _remoteState.value;
+  Rx<RemoteState> get remoteState => _remoteState;
 
   Future getMovieDetail(int movieId) async {
     try {
@@ -17,7 +17,6 @@ class MovieDetailController extends GetxController {
 
       final result = await movieService.fetchMovieDetails(movieId);
       _remoteState.value = RemoteStateSuccess(result);
-
     } on Exception catch (e) {
       _remoteState.value = RemoteStateError(e.toString());
     }
