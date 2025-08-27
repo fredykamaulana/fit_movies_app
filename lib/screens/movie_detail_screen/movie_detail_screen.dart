@@ -15,18 +15,15 @@ class MovieDetailScreen extends StatefulWidget {
 }
 
 class _MovieDetailScreenState extends State<MovieDetailScreen> {
+  MovieDetailController movieDetailController =
+      Get.put(MovieDetailController(movieService: Get.put(MovieService())));
 
-  MovieDetailController movieDetailController = Get.put(
-      MovieDetailController(movieService: Get.put(MovieService()))
-  );
-  
   @override
   void initState() {
-    
     Future.microtask(() {
       movieDetailController.getMovieDetail(widget.movieId);
     });
-    
+
     super.initState();
   }
 
@@ -37,11 +34,12 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
         title: const Text("Movie Detail"),
       ),
       body: Obx(() {
-        return switch (movieDetailController.remoteState) {
-          RemoteStateLoading() => const Center(child: CircularProgressIndicator()),
+        return switch (movieDetailController.remoteState.value) {
+          RemoteStateLoading() =>
+            const Center(child: CircularProgressIndicator()),
           RemoteStateError(error: var message) => Center(child: Text(message)),
           RemoteStateSuccess<MovieDetailResponse>(data: var response) =>
-              MovieDetailContent(movieDetail: response),
+            MovieDetailContent(movieDetail: response),
           _ => const Center(child: Text('nothing'))
         };
       }),
