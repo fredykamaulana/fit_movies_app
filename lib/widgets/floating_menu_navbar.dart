@@ -17,121 +17,102 @@ class _MainMenuNavbarState extends State<MainMenuNavbar> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Obx(() {
-            return TextButton(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Obx(() {
+              return TextButton(
+                  onPressed: () {
+                    widget.movieListController
+                        .setFilter(MovieFilter.nowPlaying);
+                  },
+                  style: ButtonStyle(
+                      shape: WidgetStatePropertyAll<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                              side: BorderSide(
+                                  color: widget.movieListController
+                                              .selectedFilter ==
+                                          MovieFilter.nowPlaying.name
+                                      ? Colors.cyan
+                                      : Colors.white)))),
+                  child: Text('Now Playing'));
+            }),
+            Obx(() {
+              return TextButton(
+                  onPressed: () {
+                    widget.movieListController.setFilter(MovieFilter.popular);
+                  },
+                  style: ButtonStyle(
+                      shape: WidgetStatePropertyAll<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                              side: BorderSide(
+                                  color: widget.movieListController
+                                              .selectedFilter ==
+                                          MovieFilter.popular.name
+                                      ? Colors.cyan
+                                      : Colors.white)))),
+                  child: Text('Popular'));
+            }),
+            Obx(() {
+              return TextButton(
+                  onPressed: () {
+                    widget.movieListController.setFilter(MovieFilter.topRated);
+                  },
+                  style: ButtonStyle(
+                      shape: WidgetStatePropertyAll<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                              side: BorderSide(
+                                  color: widget.movieListController
+                                              .selectedFilter ==
+                                          MovieFilter.topRated.name
+                                      ? Colors.cyan
+                                      : Colors.white)))),
+                  child: Text('Top Rated'));
+            }),
+            Obx(() {
+              return TextButton(
+                  onPressed: () {
+                    widget.movieListController.setFilter(MovieFilter.upcoming);
+                  },
+                  style: ButtonStyle(
+                      shape: WidgetStatePropertyAll<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                              side: BorderSide(
+                                  color: widget.movieListController
+                                              .selectedFilter ==
+                                          MovieFilter.upcoming.name
+                                      ? Colors.cyan
+                                      : Colors.white)))),
+                  child: Text('Upcoming'));
+            }),
+            Obx(() {
+              return IconButton(
+                key: const Key('search_icon_button'),
+                icon: Icon(
+                    widget.movieListController.selectedFilter ==
+                            MovieFilter.favourite.name
+                        ? Icons.favorite
+                        : Icons.favorite_border,
+                    color: Colors.cyan),
                 onPressed: () {
-                  widget.movieListController.setFilter(MovieFilter.nowPlaying);
+                  widget.movieListController.setFilter(MovieFilter.favourite);
+                  Navigator.pushNamed(context, NavigationRoutes.favourite.name);
                 },
-                style: ButtonStyle(
-                    shape: WidgetStatePropertyAll<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                            side: BorderSide(
-                                color: widget.movieListController.selectedFilter ==
-                                    MovieFilter.nowPlaying.name
-                                    ? Colors.cyan : Colors.white
-                            )
-                        )
-                    )
-                ),
-                child: Text('Now Playing')
-            );
-          }),
-
-          Obx(() {
-            return TextButton(
-                onPressed: () {
-                  widget.movieListController.setFilter(MovieFilter.popular);
-                },
-                style: ButtonStyle(
-                    shape: WidgetStatePropertyAll<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                            side: BorderSide(
-                                color: widget.movieListController.selectedFilter ==
-                                    MovieFilter.popular.name
-                                    ? Colors.cyan : Colors.white
-                            )
-                        )
-                    )
-                ),
-                child: Text('Popular')
-            );
-          }),
-
-          Obx(() {
-            return TextButton(
-                onPressed: () {
-                  widget.movieListController.setFilter(MovieFilter.topRated);
-                },
-                style: ButtonStyle(
-                    shape: WidgetStatePropertyAll<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                            side: BorderSide(
-                                color: widget.movieListController.selectedFilter ==
-                                    MovieFilter.topRated.name
-                                    ? Colors.cyan : Colors.white
-                            )
-                        )
-                    )
-                ),
-                child: Text('Top Rated')
-            );
-          }),
-
-          Obx(() {
-            return TextButton(
-                onPressed: () {
-                  widget.movieListController.setFilter(MovieFilter.upcoming);
-                },
-                style: ButtonStyle(
-                    shape: WidgetStatePropertyAll<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                            side: BorderSide(
-                                color: widget.movieListController.selectedFilter ==
-                                    MovieFilter.upcoming.name
-                                    ? Colors.cyan : Colors.white
-                            )
-                        )
-                    )
-                ),
-                child: Text('Upcoming')
-            );
-          }),
-
-          Obx((){
-            return IconButton(
-              icon: Icon(widget.movieListController.selectedFilter ==
-                  MovieFilter.favourite.name
-                  ? Icons.favorite : Icons.favorite_border,
-                  color: Colors.cyan
-              ),
+              );
+            }),
+            IconButton(
+              icon: Icon(Icons.search, color: Colors.cyan),
               onPressed: () {
-                widget.movieListController.setFilter(MovieFilter.favourite);
-                Navigator.pushNamed(context, NavigationRoutes.favourite.name);
+                widget.movieListController.setIsSearching(true);
               },
-            );
-          }),
-
-          IconButton(
-            icon: Icon(
-                Icons.search,
-                color: Colors.cyan
             ),
-            onPressed: () {
-              widget.movieListController
-                  .setIsSearching(true);
-            },
-          ),
-        ],
-      )
-    );
+          ],
+        ));
   }
 }
