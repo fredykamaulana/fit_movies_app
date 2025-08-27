@@ -9,9 +9,9 @@ class FavouriteMovieController extends GetxController {
 
   final RxBool _isFavourite = false.obs;
 
-  get isFavourite => _isFavourite.value;
+  bool get isFavourite => _isFavourite.value;
 
-  findingFavouriteMovie(int movieId) async{
+  Future<void> findingFavouriteMovie(int movieId) async {
     final favouriteMovie = await dbService.isFavourite(movieId);
     if (favouriteMovie) {
       _isFavourite.value = true;
@@ -20,7 +20,7 @@ class FavouriteMovieController extends GetxController {
     }
   }
 
-  setFavouriteStatus(bool status) {
+  void setFavouriteStatus(bool status) {
     _isFavourite.value = status;
   }
 
@@ -38,11 +38,12 @@ class FavouriteMovieController extends GetxController {
     await getAllFavouriteMovies();
   }
 
-  final Rx<List<FavouriteMovie>> _favouriteMovies = Rx<List<FavouriteMovie>>([]);
+  final Rx<List<FavouriteMovie>> _favouriteMovies =
+      Rx<List<FavouriteMovie>>([]);
 
-  get favouriteMovies => _favouriteMovies.value;
+  List<FavouriteMovie> get favouriteMovies => _favouriteMovies.value;
 
-  getAllFavouriteMovies() async {
+  Future<void> getAllFavouriteMovies() async {
     _favouriteMovies.value = await dbService.getAllFavouriteMovies();
   }
 }
