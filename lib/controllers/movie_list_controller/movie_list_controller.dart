@@ -14,19 +14,18 @@ class MovieListController extends GetxController {
 
   final Rx<RemoteState> _pagingState = Rx<RemoteState>(RemoteStateNone());
 
-  get pagingState => _pagingState.value;
+  RemoteState get pagingState => _pagingState.value;
 
   final RxInt _currentPage = 1.obs;
 
-  get currentPage => _currentPage.value;
+  int get currentPage => _currentPage.value;
 
   final Rx<List<Result>> _movieList = Rx<List<Result>>([]);
 
-  get movieList => _movieList.value;
+  List<Result> get movieList => _movieList.value;
 
   Future<List<Result>> getMovieList(String filter, int page) async {
     try {
-
       if (_pagingState.value is RemoteStateLoading) {
         return _movieList.value; // Return current list if already loading
       }
@@ -57,11 +56,11 @@ class MovieListController extends GetxController {
 
   final RxString _selectedFilter = MovieFilter.nowPlaying.name.obs;
 
-  get selectedFilter => _selectedFilter.value;
+  String get selectedFilter => _selectedFilter.value;
 
-  setFilter(MovieFilter filter) {
+  void setFilter(MovieFilter filter) {
     if (_selectedFilter.value != filter.name) {
-      if(!filter.name.contains('@')) {
+      if (!filter.name.contains('@')) {
         _movieList.value = [];
         _currentPage.value = 1;
         _pagingState.value = RemoteStateNone();
@@ -77,9 +76,9 @@ class MovieListController extends GetxController {
 
   final RxBool _isSearching = false.obs;
 
-  get isSearching => _isSearching.value;
+  bool get isSearching => _isSearching.value;
 
-  setIsSearching(bool value) {
+  void setIsSearching(bool value) {
     _isSearching.value = value;
     if (!value) {
       _searchQuery.value = '';
@@ -92,15 +91,14 @@ class MovieListController extends GetxController {
 
   final RxString _searchQuery = ''.obs;
 
-  get searchQuery => _searchQuery.value;
+  String get searchQuery => _searchQuery.value;
 
-  setSearchQuery(String query) {
+  void setSearchQuery(String query) {
     _searchQuery.value = query;
   }
 
   Future<List<Result>> searchMovie(String query, int page) async {
     try {
-
       if (_pagingState.value is RemoteStateLoading) {
         return _movieList.value; // Return current list if already loading
       }
