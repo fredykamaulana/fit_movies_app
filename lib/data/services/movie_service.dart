@@ -2,9 +2,10 @@ import 'package:fit_movies_app/data/network/dio_api_client.dart';
 import 'package:fit_movies_app/data/responses/movie_detail_response.dart';
 import 'package:fit_movies_app/data/responses/movie_list_response.dart';
 import 'package:flutter/foundation.dart';
+import 'dart:developer' as developer;
+import 'dart:convert';
 
 class MovieService {
-
   final serviceName = '/movie';
 
   Future<MovieListResponse> fetchMovies(String filter, int page) async {
@@ -13,7 +14,13 @@ class MovieService {
         print('$serviceName/$filter?page=$page');
       }
 
-      final response = await DioApiClient().dio.get('$serviceName/$filter?page=$page');
+      final response =
+          await DioApiClient().dio.get('$serviceName/$filter?page=$page');
+
+      //Logging response data for debugging
+      developer.log('Response data: ${jsonEncode(response.data)}',
+          name: 'MovieService.fetchMovies');
+
       if (response.statusCode == 200) {
         return MovieListResponse.fromJson(response.data);
       } else {
