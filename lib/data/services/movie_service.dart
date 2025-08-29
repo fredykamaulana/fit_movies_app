@@ -4,7 +4,6 @@ import 'package:fit_movies_app/data/responses/movie_list_response.dart';
 import 'package:flutter/foundation.dart';
 
 class MovieService {
-
   final serviceName = '/movie';
 
   Future<MovieListResponse> fetchMovies(String filter, int page) async {
@@ -13,7 +12,8 @@ class MovieService {
         print('$serviceName/$filter?page=$page');
       }
 
-      final response = await DioApiClient().dio.get('$serviceName/$filter?page=$page');
+      final response =
+          await DioApiClient().dio.get('$serviceName/$filter?page=$page');
       if (response.statusCode == 200) {
         return MovieListResponse.fromJson(response.data);
       } else {
