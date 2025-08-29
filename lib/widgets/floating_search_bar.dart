@@ -30,7 +30,7 @@ class _FloatingSearchBarState extends State<FloatingSearchBar> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      key: Key('floating_search_bar'),
+      key: Key('searchBar'),
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
