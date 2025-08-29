@@ -17,6 +17,7 @@ class _MainMenuNavbarState extends State<MainMenuNavbar> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+        key: Key('mainMenuNavbar'),
         scrollDirection: Axis.horizontal,
         child: Row(
           mainAxisSize: MainAxisSize.max,
@@ -93,7 +94,6 @@ class _MainMenuNavbarState extends State<MainMenuNavbar> {
             }),
             Obx(() {
               return IconButton(
-                key: const Key('search_icon_button'),
                 icon: Icon(
                     widget.movieListController.selectedFilter ==
                             MovieFilter.favourite.name
@@ -107,6 +107,7 @@ class _MainMenuNavbarState extends State<MainMenuNavbar> {
               );
             }),
             IconButton(
+              key: const Key('searchIcon'),
               icon: Icon(Icons.search, color: Colors.cyan),
               onPressed: () {
                 widget.movieListController.setIsSearching(true);
