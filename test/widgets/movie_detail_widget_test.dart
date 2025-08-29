@@ -25,13 +25,11 @@ void main() {
   setUp(() async {
     mockController = MockMovieDetailController();
     remoteStateRX = Rx<RemoteState>(RemoteStateNone());
-    // Return the Rx<RemoteState> itself, not its value
-    //when(() => mockController.remoteState).thenReturn(remoteStateRX);
+
     Get.put<MovieDetailController>(mockController);
 
     //setup hive
     await setUpTestHive();
-    //Hive.registerAdapter(FavouriteMovieAdapter());
     var box = await Hive.openBox<FavouriteMovie>('favouriteMovies');
     Get.put<Box<FavouriteMovie>>(box);
   });
@@ -45,6 +43,8 @@ void main() {
       // Arrange
       remoteStateRX.value = RemoteStateLoading();
       when(() => mockController.getMovieDetail(any())).thenAnswer((_) async {});
+
+      // Return the Rx<RemoteState> itself, not its value
       when(() => mockController.remoteState).thenReturn(remoteStateRX);
 
       // Act
@@ -60,6 +60,8 @@ void main() {
       remoteStateRX.value = RemoteStateError('Failed');
       when(() => mockController.getMovieDetail(any()))
           .thenAnswer((_) async => {});
+
+      // Return the Rx<RemoteState> itself, not its value
       when(() => mockController.remoteState).thenReturn(remoteStateRX);
 
       // Act
@@ -77,6 +79,8 @@ void main() {
           RemoteStateSuccess<MovieDetailResponse>(dummyMovieDetailResponse);
       when(() => mockController.getMovieDetail(any()))
           .thenAnswer((_) async => {});
+
+      // Return the Rx<RemoteState> itself, not its value
       when(() => mockController.remoteState).thenReturn(remoteStateRX);
 
       // Act
