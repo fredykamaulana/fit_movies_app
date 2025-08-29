@@ -12,19 +12,21 @@ void main() {
 
   group('Movie List Screen Tests', () {
     testWidgets('Test Search Icon Navigation', (WidgetTester tester) async {
+      // Start the app
       app.main();
+      await tester.pumpWidget(app.MyApp());
+
+      // Wait for the app to settle
       await tester.pumpAndSettle();
+
       // Initialize the robot with the tester
       movieListScreenRobot = MovieListScreenRobot(tester: tester);
 
-      print('Before tapping search icon');
       // Tap the search icon using the robot
       await movieListScreenRobot.tapSearchIcon();
-      print('After tapping search icon');
 
       // Verify that the search widget is displayed
-      expect(find.byKey(Key('floating_search_bar')), findsOneWidget);
-      print('Search widget displayed');
+      expect(find.byKey(const Key('searchBar')), findsOneWidget);
 
       // Report the result to the integration test binding
       binding.reportData = <String, dynamic>{'result': 'passed'};
