@@ -34,22 +34,22 @@ void main() {
     //   expect(controller.isFavourite, true);
     // });
 
-    // test(
-    //     'isFavourite value should be false when db not contains desired movieId',
-    //     () async {
-    //   // Arrange
-    //   when(() => dbService.isFavourite(1))
-    //       .thenAnswer((_) => Future.value(false));
+    test(
+        'isFavourite value should be false when db not contains desired movieId',
+        () async {
+      // Arrange
+      when(() => dbService.isFavourite(1))
+          .thenAnswer((_) => Future.value(false));
 
-    //   // Act
-    //   await controller.findingFavouriteMovie(1);
+      // Act
+      await controller.findingFavouriteMovie(1);
 
-    //   // Assert
-    //   verify(() => dbService.isFavourite(1)).called(1);
+      // Assert
+      verify(() => dbService.isFavourite(1)).called(1);
 
-    //   // Assert
-    //   expect(controller.isFavourite, false);
-    // });
+      // Assert
+      expect(controller.isFavourite, false);
+    });
 
     test('isFavourite should be return desired value when set favourite status',
         () {

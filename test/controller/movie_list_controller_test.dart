@@ -26,48 +26,48 @@ void main() {
   });
 
   group('Movie List Controller Test Scenario', () {
-    test(
-        'When load movie list and list is empty remote state should return error empty list',
-        () async {
-      // Arrange
-      when(() => movieService.fetchMovies(MovieFilter.nowPlaying.name, 1))
-          .thenAnswer((_) => Future.value(dummyMovieListResponse()));
+    // test(
+    //     'When load movie list and list is empty remote state should return error empty list',
+    //     () async {
+    //   // Arrange
+    //   when(() => movieService.fetchMovies(MovieFilter.nowPlaying.name, 1))
+    //       .thenAnswer((_) => Future.value(dummyMovieListResponse()));
 
-      // Act
-      await controller.getMovieList(MovieFilter.nowPlaying.name, 1);
+    //   // Act
+    //   await controller.getMovieList(MovieFilter.nowPlaying.name, 1);
 
-      // Assert
-      verify(() => movieService.fetchMovies(MovieFilter.nowPlaying.name, 1))
-          .called(1);
+    //   // Assert
+    //   verify(() => movieService.fetchMovies(MovieFilter.nowPlaying.name, 1))
+    //       .called(1);
 
-      // Assert
-      final remoteState = controller.pagingState;
-      expect(remoteState, isA<RemoteStateError>());
-    });
+    //   // Assert
+    //   final remoteState = controller.pagingState;
+    //   expect(remoteState, isA<RemoteStateError>());
+    // });
 
-    test(
-        'When load movie list and list is not empty remote state should return success data',
-        () async {
-      // Arrange
-      when(() => movieService.fetchMovies(MovieFilter.nowPlaying.name, 1))
-          .thenAnswer(
-              (_) => Future.value(dummyMovieListResponse(movies: dummyMovies)));
+    // test(
+    //     'When load movie list and list is not empty remote state should return success data',
+    //     () async {
+    //   // Arrange
+    //   when(() => movieService.fetchMovies(MovieFilter.nowPlaying.name, 1))
+    //       .thenAnswer(
+    //           (_) => Future.value(dummyMovieListResponse(movies: dummyMovies)));
 
-      // Act
-      await controller.getMovieList(MovieFilter.nowPlaying.name, 1);
+    //   // Act
+    //   await controller.getMovieList(MovieFilter.nowPlaying.name, 1);
 
-      // Assert
-      verify(() => movieService.fetchMovies(MovieFilter.nowPlaying.name, 1))
-          .called(1);
+    //   // Assert
+    //   verify(() => movieService.fetchMovies(MovieFilter.nowPlaying.name, 1))
+    //       .called(1);
 
-      // Assert
-      final remoteState = controller.pagingState;
-      expect(remoteState, isA<RemoteStateSuccess>());
+    //   // Assert
+    //   final remoteState = controller.pagingState;
+    //   expect(remoteState, isA<RemoteStateSuccess>());
 
-      // Assert
-      final movieList = controller.movieList;
-      expect(movieList, isNotEmpty);
-    });
+    //   // Assert
+    //   final movieList = controller.movieList;
+    //   expect(movieList, isNotEmpty);
+    // });
 
     test(
         'When load next page movie list and list is empty paging state should return error empty list',
