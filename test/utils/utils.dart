@@ -17,16 +17,16 @@ List<Result> dummyMovies = [
       title: 'title',
       video: false,
       voteAverage: 0.0,
-      voteCount: 123
-  )
+      voteCount: 123)
 ];
 
-MovieListResponse dummyMovieListResponse({List<Result> movies = const []}) => MovieListResponse(
-  page: 1,
-  results: movies,
-  totalResults: 0,
-  totalPages: 0,
-);
+MovieListResponse dummyMovieListResponse({List<Result> movies = const []}) =>
+    MovieListResponse(
+      page: 1,
+      results: movies,
+      totalResults: 0,
+      totalPages: 0,
+    );
 
 MovieDetailResponse dummyMovieDetailResponse = MovieDetailResponse(
   adult: false,

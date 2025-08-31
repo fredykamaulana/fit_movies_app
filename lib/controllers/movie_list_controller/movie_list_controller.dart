@@ -26,7 +26,6 @@ class MovieListController extends GetxController {
 
   Future<List<Result>> getMovieList(String filter, int page) async {
     try {
-
       if (_pagingState.value is RemoteStateLoading) {
         return _movieList.value; // Return current list if already loading
       }
@@ -41,7 +40,7 @@ class MovieListController extends GetxController {
         _pagingState.value = RemoteStateSuccess<MovieListResponse>(result);
 
         _currentPage.value = result.page;
-        _movieList.value = _movieList.value + result.results;
+        _movieList.value = _movieList.value;
       }
 
       return result.results;
@@ -61,7 +60,7 @@ class MovieListController extends GetxController {
 
   setFilter(MovieFilter filter) {
     if (_selectedFilter.value != filter.name) {
-      if(!filter.name.contains('@')) {
+      if (!filter.name.contains('@')) {
         _movieList.value = [];
         _currentPage.value = 1;
         _pagingState.value = RemoteStateNone();
@@ -100,7 +99,6 @@ class MovieListController extends GetxController {
 
   Future<List<Result>> searchMovie(String query, int page) async {
     try {
-
       if (_pagingState.value is RemoteStateLoading) {
         return _movieList.value; // Return current list if already loading
       }
