@@ -1,4 +1,4 @@
-name: Build Atrifact
+name: Build Artifact
 
 on:
   push:
@@ -22,24 +22,24 @@ jobs:
         with:
           channel: stable
       
-      - name: Create file .env
-      - run: |
+      - name: Create env file
+        run: |
           echo "TMDB_API_KEY=${{ secrets.TMDB_API_KEY }}" > .env
 
       - name: Install dependencies
-      - run: flutter pub get
+        run: flutter pub get
 
       - name: Analyze
-      - run: flutter analyze .
+        run: flutter analyze .
 
       - name: Run tests
-      - run: flutter test
+        run: flutter test
 
       - name: Build APK
-      - run: flutter build apk
+        run: flutter build apk
 
       - name: Upload artifact
-      - uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4
         with:
           name: release-apk
           path: build/app/outputs/apk/release/app-release.apk
