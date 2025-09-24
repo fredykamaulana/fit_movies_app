@@ -123,10 +123,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
       final result = await authController.register(
           emailController.text, psswdController.text);
 
-      userController.addUser(UserData(
-          userId: result.user?.uid ?? '',
-          userName: result.user?.displayName ?? '',
-          userEmail: result.user?.email ?? ''));
+      if (result.user != null) {
+        userController.addUser(UserData(
+            userId: result.user?.uid ?? '',
+            userName: result.user?.displayName ?? '',
+            userEmail: result.user?.email ?? ''));
+      }
 
       _showSnackbar('Sukses daftar sebagai ${result.user?.email}');
 
